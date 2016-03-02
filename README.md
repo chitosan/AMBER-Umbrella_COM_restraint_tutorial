@@ -33,3 +33,14 @@ Use antechamber to create AMBER parameters for methanol:
 Then use tleap to convert the resulting MOH.mol2 into MOH.off:
 
 >tleap -f convert.leap
+
+# Step 2: Placement
+Next we place the methanol molecule at the center of the membrane (z-distance between methanol and DMPC bilayer is zero).
+
+A study has shown that pulling from the middle of the membrane out allows faster convergence of PMFs rather than pulling from the water phase into the membrane:
+
+http://pubs.acs.org/doi/abs/10.1021/jp501622d
+
+You can use the python script to place the methanol molecule at z=0 from the DMPC bilayer COM:
+
+>./com_placement.py -i DMPC_72_relax.pdb -d methanol.pdb -z 0.0 > moh_center.pdb
