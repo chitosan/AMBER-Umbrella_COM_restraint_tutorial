@@ -20,3 +20,12 @@ http://pubs.acs.org/doi/abs/10.1021/jp035260s
 http://pubs.acs.org/doi/abs/10.1021/jp903248s
 
 http://dx.doi.org/10.1016/j.bpj.2014.06.024
+
+# Step 1: Parameters
+First we need starting membrane bilayer PDB file and coordinates and parameters for methanol.
+
+You can follow the AMBER tutorial TUTORIAL A16: An Amber Lipid Force Field Tutorial: Lipid14 to obtain an equilibrated lipid bilayer.
+
+Use antechamber to create AMBER parameters for methanol:
+
+antechamber -i methanol.pdb -fi pdb -o MOH.mol2 -fo mol2 -c bcc -s 2
