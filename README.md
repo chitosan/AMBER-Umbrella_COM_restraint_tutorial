@@ -28,4 +28,4 @@ You can follow the AMBER tutorial TUTORIAL A16: An Amber Lipid Force Field Tutor
 
 Use antechamber to create AMBER parameters for methanol:
 
-        *antechamber -i methanol.pdb -fi pdb -o MOH.mol2 -fo mol2 -c bcc -s 2*
+*antechamber -i methanol.pdb -fi pdb -o MOH.mol2 -fo mol2 -c bcc -s 2*
