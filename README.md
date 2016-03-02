@@ -51,25 +51,16 @@ We can now create AMBER prmtop and inpcrd files of the system. First, to set the
 
 Using the output we can build the system with build.leap file shown below:
 
->source leaprc.ff14SB
-
->source leaprc.gaff
-
->source leaprc.lipid16
-
->loadoff MOH.off
-
->drug = loadpdb moh_center.pdb
-
->bilayer = loadpdb DMPC_72_relax.pdb
-
->system = combine {drug bilayer}
-
->set system box {48.158 47.372 77.938}
-
->saveamberparm system DMPC_MOH.prmtop DMPC_MOH.inpcrd
-
->quit
+source leaprc.ff14SB
+source leaprc.gaff
+source leaprc.lipid16
+loadoff MOH.off
+drug = loadpdb moh_center.pdb
+bilayer = loadpdb DMPC_72_relax.pdb
+system = combine {drug bilayer}
+set system box {48.158 47.372 77.938}
+saveamberparm system DMPC_MOH.prmtop DMPC_MOH.inpcrd
+quit
 
 Now run tleap:
 
