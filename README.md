@@ -45,6 +45,8 @@ You can use the python script to place the methanol molecule at z=0 from the DMP
 
 >./com_placement.py -i DMPC_72_relax.pdb -d methanol.pdb -z 0.0 > moh_center.pdb
 
+**Important note:** The com_placement.py script defines the center-of-mass of the membrane using the PC N31 head group atoms in the lipids. It will not work if these are not present: if you wish to use other atoms, you'll have to update the code. Also, if your drug molecule contains unusual atom types, you may need to add the atomic mass of these atoms into the com_placement code.
+
 We can now create AMBER prmtop and inpcrd files of the system. First, to set the periodic box dimensions correctly, we use the vmd_box_dims.sh script from the A16 Lipid tutorial:
 
 >./vmd_box_dims.sh -i DMPC_72_relax.pdb -s water  
@@ -66,3 +68,8 @@ Using the output we can build the system with build.leap file shown below:
 Now run tleap:
 
 >tleap -f build.leap
+
+# Step 3: Pulling
+Now that we have our system constructed, we first equilibrate it then run a pulling step, which slowly moves the methanol molecule from z=0A out into the water phase (z=32A).
+
+First, we need the distance restraint file.
