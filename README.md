@@ -47,7 +47,8 @@ You can use the python script to place the methanol molecule at z=0 from the DMP
 
 We can now create AMBER prmtop and inpcrd files of the system. First, to set the periodic box dimensions correctly, we use the vmd_box_dims.sh script from the A16 Lipid tutorial:
 
->./vmd_box_dims.sh -i DMPC_72_relax.pdb -s water
+>./vmd_box_dims.sh -i DMPC_72_relax.pdb -s water  
+>48.158000, 47.372001, 77.938003
 
 Using the output we can build the system with build.leap file shown below:
 
