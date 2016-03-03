@@ -99,3 +99,12 @@ The inputs and run script are provided. Please also examine the input files, imp
 >&wt type='END', /  
 >DISANG=COM_dist.RST *details of the COM restraint*  
 >DUMPAVE=04_Equil_dist.RST *file to write position of restrained molecule to*  
+
+You can then run both the equilibration (heat, hold methanol at z=0 for 100ps) and the pulling with the following bash script:
+>run_pull.sh
+
+You will have to modify GPU / AMBERHOME specific information, or make it suitable for your cluster.
+
+Due to file sizes, the outputs are not provided here. You can check the pulling step has worked by plotting the z-position:
+>xmgrace 05_Pull_dist.dat
+
