@@ -80,10 +80,12 @@ First we need a pdb of the system with atom indexing correct:
 Now run the script:
 >./make_COM_file.py -i for_index.pdb -o ref_COM_file.RST
 
-As an aside, we can also check that we have the correct atom indices directly from the prmtop using parmed. We need an input for parmed, see details_parmed.in
+As an aside, we can also check that we have the correct atom indices directly from the prmtop using parmed. We need an input for parmed, see details_parmed.in:
 >parm DMPC_MOH.prmtop  
 >printDetails *  
 >quit  
+
+Run ParmEd:
 
 >parmed.py -i details_parmed.in
 
