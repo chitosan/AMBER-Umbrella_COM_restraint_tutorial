@@ -72,4 +72,14 @@ Now run tleap:
 # Step 3: Pulling
 Now that we have our system constructed, we first equilibrate it then run a pulling step, which slowly moves the methanol molecule from z=0A out into the water phase (z=32A).
 
-First, we need the distance restraint file.
+First, we need the distance restraint file. You can use the make_COM_file.py script to construct this. It contains the atom indices of the drug atoms (group 1 to be constrained) and the atom indices of the lipid N31 head group atoms (reference to constrain to). It also contains details of the harmonic restraint to apply and flags to turn on the umbrella COM method.
+
+First we need a pdb of the system with atom indexing correct:
+>ambpdb -p DMPC_MOH.prmtop <DMPC_MOH.inpcrd> for_index.pdb
+
+Now run the script:
+>./make_COM_file.py -i for_index.pdb -o ref_COM_file.RST
+
+Please go through the AMBER manual so that you know what each line in the ref_COM_file.RST means. Important flags are:
+>fxyz=0,0,1,  **turn on umbrella COM in z-direction only**
+>outxyz=1,    **print position of restrained molecule in x,y,z dimensions**
