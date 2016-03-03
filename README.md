@@ -95,7 +95,7 @@ We also need a file for the pulling step COM_pull.RST. This is similar yet speci
 We now have the .RST files for equilibration (methanol is held at z=0) and for the pulling (methanol is moved from z=0 to z=32A).
 
 The inputs and run script are provided. Please also examine the input files, importantly:
->&wt type='DUMPFREQ', istep1=1000 /  *print position of restrained molecule every 1000 steps*
+>&wt type='DUMPFREQ', istep1=1000 /  *print position of restrained molecule every 1000 steps*  
 >&wt type='END', /  
->DISANG=COM_dist.RST *details of the COM restraint*
->DUMPAVE=04_Equil_dist.RST *file to write position of restrained molecule to*
+>DISANG=COM_dist.RST *details of the COM restraint*  
+>DUMPAVE=04_Equil_dist.RST *file to write position of restrained molecule to*  
