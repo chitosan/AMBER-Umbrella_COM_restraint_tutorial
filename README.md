@@ -119,3 +119,4 @@ You will have to modify GPU / AMBERHOME specific information, or make it suitabl
 Due to file sizes, the outputs are not provided here. You can check the pulling step has worked by plotting the z-position:
 >xmgrace 05_Pull_dist.dat
 
+![Alt text](/figures/moh_pull.png?raw=true "Optional Title")
