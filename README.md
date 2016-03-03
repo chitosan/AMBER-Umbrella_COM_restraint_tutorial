@@ -112,7 +112,7 @@ The inputs and run script are provided. Please also examine the input files, imp
 >DUMPAVE=04_Equil_dist.RST *file to write position of restrained molecule to*  
 
 You can then run both the equilibration (heat, hold methanol at z=0 for 100ps) and the pulling (move methanol from z=0 to z=32A  over 32ns of simulation) with the following bash script:
->run_pull.sh
+>./run_pull.sh
 
 You will have to modify GPU / AMBERHOME specific information, or make it suitable for your cluster.
 
@@ -146,6 +146,6 @@ This will output frames with the methanol at 0, 1, 2, ..., 32A from the bilayer 
 
 Now we can run each window for 30ns using the 06_Prod.in input and run_window_cuda.sh bash run script.
 
->run_window_cuda.sh
+>./run_window_cuda.sh
 
 If you have multiple GPUs you may want to split these steps into parallel runs, or run each over a CPU cluster.
