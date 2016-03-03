@@ -90,4 +90,4 @@ You may notice that ref_COM_file.RST has settings "DISTHERE" - we will copy this
 
 Change DISTHERE to 0.0 in COM_dist.RST. 
 
-We also need a file for the pulling step. This is similar yet specifies a starting positon of 0 and a final position of 32, the force constant for pulling is also reduced to 1.1.
+We also need a file for the pulling step COM_pull.RST. This is similar yet specifies a starting positon of 0 and a final position of 32, the force constant for pulling is also reduced to 1.1.
