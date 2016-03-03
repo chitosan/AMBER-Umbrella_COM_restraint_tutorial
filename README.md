@@ -80,6 +80,15 @@ First we need a pdb of the system with atom indexing correct:
 Now run the script:
 >./make_COM_file.py -i for_index.pdb -o ref_COM_file.RST
 
+As an aside, we can also check that we have the correct atom indices directly from the prmtop using parmed. We need an input for parmed, see details_parmed.in
+>parm DMPC_MOH.prmtop  
+>printDetails *  
+>quit  
+
+>parmed.py -i details_parmed.in
+
+You will see that the N31 atom index values corresponds to those in ref_COM_file.RST
+
 Please go through the AMBER manual so that you know what each line in the ref_COM_file.RST means. Important flags are:
 >rk2=2.5    *restraint force constant*  
 >fxyz=0,0,1 *turn on umbrella COM in z-direction only*  
