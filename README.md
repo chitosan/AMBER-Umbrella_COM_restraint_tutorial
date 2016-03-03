@@ -81,5 +81,13 @@ Now run the script:
 >./make_COM_file.py -i for_index.pdb -o ref_COM_file.RST
 
 Please go through the AMBER manual so that you know what each line in the ref_COM_file.RST means. Important flags are:
->fxyz=0,0,1,	*turn on umbrella COM in z-direction only*  
->outxyz=1,   	*print position of restrained molecule in x,y,z dimensions*
+>rk2=2.5    *restraint force constant*
+>fxyz=0,0,1 *turn on umbrella COM in z-direction only*  
+>outxyz=1   *print position of restrained molecule in x,y,z dimensions*
+
+You may notice that ref_COM_file.RST has settings "DISTHERE" - we will copy this to a new file and add in the correct settings here.
+>cp ref_COM_file.RST COM_dist.RST
+
+Change DISTHERE to 0.0 in COM_dist.RST. 
+
+We also need a file for the pulling step. This is similar yet specifies a starting positon of 0 and a final position of 32, the force constant for pulling is also reduced to 1.1.
