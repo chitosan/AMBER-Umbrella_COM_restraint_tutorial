@@ -111,7 +111,7 @@ The inputs and run script are provided. Please also examine the input files, imp
 >DISANG=COM_dist.RST *details of the COM restraint*  
 >DUMPAVE=04_Equil_dist.RST *file to write position of restrained molecule to*  
 
-You can then run both the equilibration (heat, hold methanol at z=0 for 100ps) and the pulling with the following bash script:
+You can then run both the equilibration (heat, hold methanol at z=0 for 100ps) and the pulling (move methanol from z=0 to z=32A  over 32ns of simulation) with the following bash script:
 >run_pull.sh
 
 You will have to modify GPU / AMBERHOME specific information, or make it suitable for your cluster.
@@ -120,3 +120,28 @@ Due to file sizes, the outputs are not provided here. You can check the pulling 
 >xmgrace 05_Pull_dist.dat
 
 ![Alt text](/figures/moh_pull.png?raw=true "Optional Title")
+
+We can now extract windows with 1A spacing along the z-axis and run windows from each.
+
+# Step 4: Windows
+First we need to extract starting points for each window run from the pulling trajectory.
+
+**Important:** We must create an imaged trajectory to extract these windows from. The bilayer center-of-mass, as defined by N31 head group atoms, is imaged to the origin (0,0,0). This means that when we extract the position of the methanol molecule, we also know that this is the separation between the bilayer COM and the methanol too.
+
+Run cpptraj with image.trajin file:
+>trajin 05_Pull_DMPC_MOH.nc  
+>center mass origin :20217@N31  
+>vector c0 :1 :1 out c0.out  
+>trajout bilayer_zero.nc netcdf  
+
+Then:
+>cpptraj DMPC_MOH.prmtop < image.trajin
+
+This should output two files: the imaged trajectory from which we extract the snapshots, and the c0.out file which contains the postion of the methanol at each frame of the trajectory. We also know that this corresponds to the separation between the methanol and bilayer center-of-mass.
+
+We can extract the window starting points using extract_window.py:
+>./extract_window.py -i bilayer_zero.nc -p DMPC_MOH.prmtop -d c0.out -start 0 -end 32 -space 1
+
+This will output frames with the methanol at 0, 1, 2, ..., 32A from the bilayer center-of-mass.
+
+Now we can run each window for 30ns using the 06_Prod.in input and run_window_cuda.sh bash run script.
