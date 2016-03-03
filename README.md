@@ -81,7 +81,7 @@ Now run the script:
 >./make_COM_file.py -i for_index.pdb -o ref_COM_file.RST
 
 Please go through the AMBER manual so that you know what each line in the ref_COM_file.RST means. Important flags are:
->rk2=2.5    *restraint force constant*
+>rk2=2.5    *restraint force constant*  
 >fxyz=0,0,1 *turn on umbrella COM in z-direction only*  
 >outxyz=1   *print position of restrained molecule in x,y,z dimensions*
 
