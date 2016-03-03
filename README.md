@@ -127,7 +127,7 @@ First we need to extract starting points for each window run from the pulling tr
 
 Run cpptraj with image.trajin file:
 >trajin 05_Pull_DMPC_MOH.nc  
->center mass origin :20217@N31  
+>center mass origin :2-217@N31  
 >vector c0 :1 :1 out c0.out  
 >trajout bilayer_zero.nc netcdf  
 
