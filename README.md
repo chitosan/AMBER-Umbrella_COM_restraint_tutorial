@@ -163,4 +163,18 @@ This is also possible for every window using the included bash script "fix_dist.
 Once you have prod_dist.dat files for every window (format: *Frame#*  *z-dist*), we can run WHAM.
 
 For wham input, you need a metadata file with the following information:
->*/path/to/file/distance.dat *restraint-position* *force-constant*
+>*/path/to/file/distance.dat*   *restraint-position*    *force-constant*  
+>eg:  
+>../md_output/dist_32.0/prod_dist.dat   32.0  5  
+>../md_output/dist_31.0/prod_dist.dat   31.0  5  
+> ...etc...
+
+You will notice that the force-constant value in metadata.dat is double that (5kcal/mol/A) compared to that used in the simulations. This is due to differences in how restraints are defined in AMBER vs WHAM. Please see the WHAM documentation for more information.
+
+You can prepare the metadata.dat file using the included script prepare_meta.sh - you may need to update this with the correct paths to your prod_dist.dat files.
+
+Now run WHAM:
+>wham 0 32 160 0.00000001 303 0 metadata.dat out.pmf  
+>  
+>Where the settings are:  
+>wham (*start*) (*end*) (*windows*) (*tolerance*) (*temperature*) (*padding*) (*input_metadata*) (*output*)
