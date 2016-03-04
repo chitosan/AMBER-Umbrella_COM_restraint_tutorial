@@ -194,5 +194,29 @@ The final step computes first the diffusion along the z-axis, combines the resul
 For details on the position-dependent diffusion and resistance calculations please see the following publication from Gerhard Hummer:
 http://iopscience.iop.org/article/10.1088/1367-2630/7/1/034/meta
 
-The position-dependent diffusion is calculated as:
+The following methods is based up that used by Carpenter et al (also linked at the top of this tutorial):
+http://dx.doi.org/10.1016/j.bpj.2014.06.024
+
+The position-dependent diffusion is calculated as:  
+
 ![equation](http://ars.els-cdn.com/content/image/1-s2.0-S000634951400664X-si2.gif)
+
+With 〈Z〉 the average of the reaction coordinate Z, var(Z) the variance of the drug position (the auto-covariance at lag zero) and tau(Z) the characteristic time of the decay of the autocovariance of the drug position Z.
+
+We calculate the autocovarince of the Z-position with increasing lag-time and perform a least-squares-fit to the log of the resulting decay curve to obtain tau(Z). This process is repeated over separate slices of the full trajectory to obtain an average tau(Z) value per window.
+
+If you ran 06_Prod.in for the full 30ns, with istep1=1 then the final output distance file will have 15000000 entries (i.e. a Z-position for every 0.002 ps step).
+
+We use a 1 ns window for the fit, with 1 ns lag. This corresponds to 500000 samples of the Z-position per fit. The script auto_covar.py loads in a prod_dist.dat file, takes the window sample size (500000) and time-step between samples (0.002 ps) plus the option to skip every nth sample. With the -v option you can chose to write out the autocovariance curves (0 off / 1 on). The script then calculates the autocovariance curve per 1 ns window (using 1 ns lag), fits the log of the autocovariance to obtain tau(Z) which is then coverted to the D(Z) value with the above formula. The average D(Z) over all fits is reported.
+
+Since we have 30 ns of data with 1 ns window, there are a total of 29 fits. You can view each autocovariance curve using the -v 1 option to print these out. An example plot is shown below.
+
+If you try auto_covar.py using -skip 0 you will notice it is extremely slow. In reality we only need every 10-100 samples. Using every 100 is suitable, try:
+>./auto_covar.py -i prod_dist.dat -w 500000 -t 0.002 -skip 100 -v 0
+
+To obtain diffusion values for every window, you can use the script get_diffusion.sh. Again, you may need to correct the file paths.
+>./get_diffusion > diffusion_out.dat
+
+Now that we have the Z-dependent diffusion values D(Z), we can combine these with the value of the free energy at each Z-position to get the local resistance value R(Z) as:  
+
+![equation](http://ars.els-cdn.com/content/image/1-s2.0-S000634951400664X-si5.gif)
