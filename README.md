@@ -121,7 +121,7 @@ Due to file sizes, the outputs are not provided here. You can check the pulling 
 We can now extract windows with 1A spacing along the z-axis and run windows from each.
 
 # Step 4: Windows
-First we need to extract starting points for each window run from the pulling trajectory.
+First we need to extract starting points for each window run from the pulling trajectory.  
 
 **Important:** We must create an imaged trajectory to extract these windows from in which the bilayer center-of-mass, as defined by N31 head group atoms, is imaged to the origin (0,0,0). This means that when we extract the position of the methanol molecule, we also know that this is the separation between the bilayer COM and the methanol too.
 
