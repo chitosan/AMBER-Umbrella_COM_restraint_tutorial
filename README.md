@@ -151,6 +151,16 @@ If you have multiple GPUs you may want to split these steps into parallel runs, 
 Once the simulations are finished you can build the free energy profile with WHAM.
 
 The simulations should output a file called "06_Prod_dist.dat" (the name is given in the 06_Prod.in input). This has the format:
-> Frame#  x:  (*x-coord*)   y:  (*y-coord*)   z:  (*z-coord*)   (*total*)
+> Frame#  x:  (*x-coord*)   y:  (*y-coord*)   z:  (*z-coord*)   (*total-coord*)
 
-Where each coord entry is the distance between the methanol and bilayer COM in each dimension. In this tutorial, we are only interested on the z-dimension.
+Where each coord entry is the distance between the methanol and bilayer COM in each dimension. In this tutorial, we are only interested on the z-dimension. In the 06_Prod.in file, the setting to write to this file is istep1=1, so distances are written every single step (0.002ps) meaning the resulting file can become large. However if possible, it is better to write this data.
+
+For WHAM and the next steps, we only need the z-dimension, so we can use an AWK script to extract this per window:
+>awk '{print $1,"",$7}' 06_Prod_dist.dat > prod_dist.dat
+
+This is also possible for every window using the included bash script "fix_dist.sh".
+
+Once you have prod_dist.dat files for every window (format: *Frame#*  *z-dist*), we can run WHAM.
+
+For wham input, you need a metadata file with the following information:
+>*/path/to/file/distance.dat *restraint-position* *force-constant*
