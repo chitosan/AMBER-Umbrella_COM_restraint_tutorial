@@ -141,7 +141,8 @@ We can extract the window starting points using extract_window.py:
 
 This will output frames with the methanol at 0, 1, 2, ..., 32A from the bilayer center-of-mass.
 
-Now we can run each window for 30ns using the 06_Prod.in input and run_window_cuda.sh bash run script.
+Now we can run each window for 30ns using the 06_Prod.in input and run_window_cuda.sh bash run script.  
+
 **Important:** You should run this using a COM_dist.RST file which is a copy of ref_COM_file.RST (i.e. it contains DISTHERE which gets substituted for the correct distance for each window).
 
 >./run_window_cuda.sh
