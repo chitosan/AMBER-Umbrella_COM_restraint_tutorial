@@ -184,3 +184,6 @@ Now run WHAM:
 You can then extract just the PMF curve and plot like so:
 >sed '1d' out.pmf | awk '{print $1,"",$2}' > plot_free_energy.dat  
 >xmgrace plot_free_energy.dat
+
+You should obtain a plot similar to this:
+![Alt text](/figures/plot_free_energy.png?raw=true "Optional Title")
