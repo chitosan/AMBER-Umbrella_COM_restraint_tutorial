@@ -146,3 +146,11 @@ Now we can run each window for 30ns using the 06_Prod.in input and run_window_cu
 >./run_window_cuda.sh
 
 If you have multiple GPUs you may want to split these steps into parallel runs, or run each over a CPU cluster.
+
+# Step 5: Free energy profile
+Once the simulations are finished you can build the free energy profile with WHAM.
+
+The simulations should output a file called "06_Prod_dist.dat" (the name is given in the 06_Prod.in input). This has the format:
+> Frame#  x:  (*x-coord*)   y:  (*y-coord*)   z:  (*z-coord*)   (*total*)
+
+Where each coord entry is the distance between the methanol and bilayer COM in each dimension. In this tutorial, we are only interested on the z-dimension.
