@@ -187,3 +187,12 @@ You can then extract just the PMF curve and plot like so:
 
 You should obtain a plot similar to this:
 ![Alt text](/figures/plot_free_energy.png?raw=true "Optional Title")
+
+#Step 6: Diffusion, resistance and overall permeability
+The final step computes first the diffusion along the z-axis, combines the result with the free energy profile data to obtain the resistance along the z-axis and finally integrates the resistance at each z-window to obtain an overall permeability coefficient estimate.
+
+For details on the position-dependent diffusion and resistance calculations please see the following publication from Gerhard Hummer:
+http://iopscience.iop.org/article/10.1088/1367-2630/7/1/034/meta
+
+The position-dependent diffusion is calculated as:
+![equation](http://ars.els-cdn.com/content/image/1-s2.0-S000634951400664X-si2.gif)
