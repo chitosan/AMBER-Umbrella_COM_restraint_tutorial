@@ -209,7 +209,8 @@ If you ran 06_Prod.in for the full 30ns, with istep1=1 then the final output dis
 
 We use a 1 ns window for the fit, with 1 ns lag. This corresponds to 500000 samples of the Z-position per fit. The script auto_covar.py loads in a prod_dist.dat file, takes the window sample size (500000) and time-step between samples (0.002 ps) plus the option to skip every nth sample. With the -v option you can chose to write out the autocovariance curves (0 off / 1 on). The script then calculates the autocovariance curve per 1 ns window (using 1 ns lag), fits the log of the autocovariance to obtain tau(Z) which is then coverted to the D(Z) value with the above formula. The average D(Z) over all fits is reported.
 
-Since we have 30 ns of data with 1 ns window, there are a total of 29 fits. You can view each autocovariance curve using the -v 1 option to print these out. An example plot is shown below.
+Since we have 30 ns of data with 1 ns window, there are a total of 29 fits. You can view each autocovariance curve using the -v 1 option to print these out. An example plot is shown below for the z=32 A window.
+![Alt text](/figures/autocov_32.0.png?raw=true "Optional Title")
 
 If you try auto_covar.py using -skip 0 you will notice it is extremely slow. In reality we only need every 10-100 samples. Using every 100 is suitable, try:
 >./auto_covar.py -i prod_dist.dat -w 500000 -t 0.002 -skip 100 -v 0
