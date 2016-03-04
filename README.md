@@ -165,11 +165,11 @@ Once you have prod_dist.dat files for every window (format: *Frame#*  *z-dist*),
 For wham input, you need a metadata file with the following information:
 >*/path/to/file/distance.dat*   *restraint-position*    *force-constant*  
 >eg:  
->../md_output/dist_32.0/prod_dist.dat   32.0  5  
->../md_output/dist_31.0/prod_dist.dat   31.0  5  
+>../md_output/dist_32.0/prod_dist.dat   32.0  5.0  
+>../md_output/dist_31.0/prod_dist.dat   31.0  5.0  
 > ...etc...
 
-You will notice that the force-constant value in metadata.dat is double that (5kcal/mol/A) compared to that used in the simulations. This is due to differences in how restraints are defined in AMBER vs WHAM. Please see the WHAM documentation for more information.
+You will notice that the force-constant value in metadata.dat is double that (5 kcal/mol/A) compared to that used in the simulations. This is due to differences in how restraints are defined in AMBER vs WHAM. Please see the WHAM documentation for more information.
 
 You can prepare the metadata.dat file using the included script prepare_meta.sh - you may need to update this with the correct paths to your prod_dist.dat files.
 
@@ -178,3 +178,7 @@ Now run WHAM:
 >  
 >Where the settings are:  
 >wham (*start*) (*end*) (*windows*) (*tolerance*) (*temperature*) (*padding*) (*input_metadata*) (*output*)
+
+You can then extract just the PMF curve and plot like so:
+>sed '1d' out.pmf | awk '{print $1,"",$2}' > plot_free_energy.dat  
+>xmgrace plot_free_energy.dat
