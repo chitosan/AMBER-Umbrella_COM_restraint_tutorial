@@ -151,7 +151,7 @@ If you have multiple GPUs you may want to split these steps into parallel runs, 
 Once the simulations are finished you can build the free energy profile with WHAM.
 
 The simulations should output a file called "06_Prod_dist.dat" (the name is given in the 06_Prod.in input). This has the format:
-> Frame#  x:  (*x-coord*)   y:  (*y-coord*)   z:  (*z-coord*)   (*total-coord*)
+> *Frame#*  x:  (*x-coord*)   y:  (*y-coord*)   z:  (*z-coord*)   (*total-coord*)
 
 Where each coord entry is the distance between the methanol and bilayer COM in each dimension. In this tutorial, we are only interested on the z-dimension. In the 06_Prod.in file, the setting to write to this file is istep1=1, so distances are written every single step (0.002ps) meaning the resulting file can become large. However if possible, it is better to write this data.
 
