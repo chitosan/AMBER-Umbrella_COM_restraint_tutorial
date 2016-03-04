@@ -224,3 +224,33 @@ Now that we have the Z-dependent diffusion values D(Z), we can combine these wit
 Once we have done that calculation we integrate over each R(z) value to get an effective resistance, the inverse of which is the permeability coefficient:  
 
 ![equation](http://ars.els-cdn.com/content/image/1-s2.0-S000634951400664X-si4.gif)
+
+I would urge you to do such calculations using a spreadsheet, so that you understand each step. A corresponding spreadsheet is enclosed.
+
+A script to perform each step is also enclosed, called parse_fe_diff.py. This reads in the free energy profile, the diffusion profile and takes the z-limits plus step (i.e. 0->32 A, 1 A step) then calculates the resistance and does the integration.
+
+The resulting profiles are shown below.
+
+Finally, we have only done the calculations for a single monolayer (water phase into the membrane center). If wish to get the values to move all the way through a symmetric membrane we can assume the values will be the same on the opposite side of the bilayer.
+
+You can then create a full free energy and resistance profile like so:
+>here
+
+And feed this back into the parse_fe_diff.py script.
+
+The values I obtain for 30 ns windows are:
+
+Gpen (free energy at the center z=0) is 
+Permeability coeffient is
+
+You values should be somewhere in this ballpark.
+
+This compare favourably with those obtained by Orsi et al (also linked at the top of this tutorial):
+http://pubs.acs.org/doi/abs/10.1021/jp903248s
+
+Gpen  ~3.3 kcal/mol
+Peff  0.1.8 ± 0.2
+
+Finally, there have been a number of articles addressing the issue of obtaining converged PMF profiles which you should take note of. Try to extend window simulation time and perform as many independent repeats from different initial coordinates and velocities to be sure your profiles are converged.
+
+....papers here
