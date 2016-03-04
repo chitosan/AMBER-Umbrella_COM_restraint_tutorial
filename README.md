@@ -212,11 +212,13 @@ We use a 1 ns window for the fit, with 1 ns lag. This corresponds to 500000 samp
 Since we have 30 ns of data with 1 ns window, there are a total of 29 fits. You can view each autocovariance curve using the -v 1 option to print these out. An example plot is shown below for the z=32 A window.
 ![Alt text](/figures/autocov_32.0.png?raw=true "Optional Title")
 
-If you try auto_covar.py using -skip 0 you will notice it is extremely slow. In reality we only need every 10-100 samples. Using every 100 is suitable, try:
+If you try auto_covar.py using -skip 0 you will notice it is extremely slow. In reality we only need every 10-100 samples. Try using every 10 or every 100 yourself and compare results:
 >./auto_covar.py -i prod_dist.dat -w 500000 -t 0.002 -skip 100 -v 0
 
 To obtain diffusion values for every window, you can use the script get_diffusion.sh. Again, you may need to correct the file paths.
->./get_diffusion > diffusion_out.dat
+>./get_diffusion > diffusion_out.dat  
+
+**Note:** For windows near z=0, fitting of the autocovariance curves can be problematic. If a tau(Z) value is unrealistically large (above a threshold) this fit is rejected. You may obtain fewer corr.dat files at windows near the bilayer center.
 
 Now that we have the Z-dependent diffusion values D(Z), we can combine these with the value of the free energy at each Z-position to get the local resistance value R(Z) as:  
 
