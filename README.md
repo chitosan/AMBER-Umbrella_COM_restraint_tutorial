@@ -300,17 +300,20 @@ The resistance profile:
 
 The values I obtain for 30 ns windows are:
 
-Gpen 3.27 kcal/mol (free energy at the center z=0)  
-Peff 0.159 cm/s
+G(pen): 3.27 kcal/mol (free energy at the center z=0)  
+P(eff)  0.159 cm/s
 
 Your values should be somewhere in this ballpark.
 
-This compare favourably with those obtained by Orsi et al (also linked at the top of this tutorial):
+These compare favourably with those obtained by Orsi et al (also linked at the top of this tutorial):
 http://pubs.acs.org/doi/abs/10.1021/jp903248s
 
-Gpen  ~3.3 kcal/mol  
-Peff  0.18 ± 0.2 cm/s
+G(pen):  ~3.3 kcal/mol  
+P(eff):   0.18 ± 0.2 cm/s
 
 Finally, there have been a number of articles addressing the issue of obtaining converged PMF profiles which you should take note of. Try to extend window simulation time and perform as many independent repeats from different initial coordinates and velocities to be sure your profiles are converged.
 
-....paperz here
+A few papers you may want to read on the issues of convergence are linked below:
+
+
+...here....
