@@ -274,7 +274,7 @@ A script to perform each step is also enclosed, called parse_fe_diff.py. This re
 
 This will output the free energy curve (free_energy_profile.parse.dat), the diffusion curve (diffusion_profile.parse.dat) and the resistance profile (resistance_profile.parse.dat) plus the overall permeability coefficient.
 
-Finally, we have only done the calculations for a single monolayer (water phase into the membrane center). If wish to get the values to move all the way through a symmetric membrane we can assume the values will be the same on the opposite side of the bilayer.
+Finally, we have only done the calculations for a single monolayer (water phase into the membrane center). If wish to get the values to move all the way through a symmetric membrane we can assume the values will be the same on the opposite side of the bilayer due to symmetry.
 
 >./windows/wham_run/overall_perm/full_profile_perm  directory  
 >tac ../free_energy_profile.parse.dat | awk '{print $1\*-1,"",$2}' > tmp  
@@ -300,7 +300,7 @@ The resistance profile:
 
 ![Alt text](/figures/resistance_full.png?raw=true "Optional Title")  
 
-The values I obtain for 30 ns windows are:
+The values I obtain using 30 ns windows are:
 
 G(pen): 3.27 kcal/mol (free energy at the center z=0)  
 P(eff): 0.159 cm/s
