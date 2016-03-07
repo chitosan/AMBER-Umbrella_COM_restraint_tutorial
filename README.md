@@ -218,10 +218,12 @@ We see that the overlap is suitable when using a 1A separation and 2.5 kcal/mol/
 #Step 6: Diffusion, resistance and overall permeability
 The final step computes first the diffusion along the z-axis, combines the result with the free energy profile data to obtain the resistance along the z-axis and finally integrates the resistance at each z-window to obtain an overall permeability coefficient estimate.
 
+>./windows/wham_run/diffusion directory  
+
 For details on the position-dependent diffusion and resistance calculations please see the following publication from Gerhard Hummer:
 http://iopscience.iop.org/article/10.1088/1367-2630/7/1/034/meta
 
-The following methods is based up that used by Carpenter et al (also linked at the top of this tutorial):
+The following methods is based on that used by Carpenter et al (also linked at the top of this tutorial):
 http://dx.doi.org/10.1016/j.bpj.2014.06.024
 
 The position-dependent diffusion is calculated as:  
@@ -232,18 +234,20 @@ With 〈Z〉 the average of the reaction coordinate Z, var(Z) the variance of th
 
 We calculate the autocovarince of the Z-position with increasing lag-time and perform a least-squares-fit to the log of the resulting decay curve to obtain tau(Z). This process is repeated over separate slices of the full trajectory to obtain an average tau(Z) value per window.
 
-If you ran 06_Prod.in for the full 30ns, with istep1=1 then the final output distance file will have 15000000 entries (i.e. a Z-position for every 0.002 ps step).
+If you ran 06_Prod.in for the full 30ns, with istep1=1, then the final output distance file will have 15000000 entries (i.e. a Z-position for every 0.002 ps step).
 
-We use a 1 ns window for the fit, with 1 ns lag. This corresponds to 500000 samples of the Z-position per fit. The script auto_covar.py loads in a prod_dist.dat file, takes the window sample size (500000) and time-step between samples (0.002 ps) plus the option to skip every nth sample. With the -v option you can chose to write out the autocovariance curves (0 off / 1 on). The script then calculates the autocovariance curve per 1 ns window (using 1 ns lag), fits the log of the autocovariance to obtain tau(Z) which is then coverted to the D(Z) value with the above formula. The average D(Z) over all fits is reported.
+We use a 1 ns window for the fit, with 1 ns lag. This corresponds to 500000 samples of the Z-position per fit. The script auto_covar.py loads in a prod_dist.dat file, takes the window sample size (500000) and time-step between samples (0.002 ps) plus the option to skip every nth sample. With the -v option you can chose to write out the autocovariance curves (0 off / 1 on). The script then calculates the autocovariance curve per 1 ns window (using 1 ns lag), fits the log of the autocovariance to obtain tau(Z) which is then coverted to the D(Z) value with the above formula. The average D(Z) over all fits is reported (cm^2/s).
 
 Since we have 30 ns of data with 1 ns window, there are a total of 29 fits. You can view each autocovariance curve using the -v 1 option to print these out. An example plot is shown below for the z=32 A window.
+>./auto_covar.py -i prod_dist.dat -w 500000 -t 0.002 -skip 0 -v 0
+
 ![Alt text](/figures/autocov_32.0.png?raw=true "Optional Title")
 
 If you try auto_covar.py using -skip 0 you will notice it is extremely slow. In reality we only need every 10-100 samples. Try using every 10 or every 100 yourself and compare results:
 >./auto_covar.py -i prod_dist.dat -w 500000 -t 0.002 -skip 100 -v 0
 
 To obtain diffusion values for every window, you can use the script get_diffusion.sh. Again, you may need to correct the file paths.
->./get_diffusion > diffusion_out.dat  
+>./get_diffusion > all_diffusion_values.out   
 
 **Note:** For windows near z=0, fitting of the autocovariance curves can be problematic. If a tau(Z) value is unrealistically large (above a threshold) this fit is rejected. You may obtain fewer corr.dat files at windows near the bilayer center.
 
@@ -259,9 +263,17 @@ I would urge you to do such calculations using a spreadsheet, so that you unders
 
 A script to perform each step is also enclosed, called parse_fe_diff.py. This reads in the free energy profile, the diffusion profile and takes the z-limits plus step (i.e. 0->32 A, 1 A step) then calculates the resistance and does the integration.
 
-The resulting profiles are shown below.
+>./windows/wham_run/overall_perm  directory  
+
+>./parse_fe_diff.py -fe ../../plot.dat -diff ../../diffusion/all_diffusion_values.out -start 0 -end 32 -space 1  
+
+This will output the free energy curve (free_energy_profile.parse.dat), the diffusion curve (diffusion_profile.parse.dat) and the resistance profile (resistance_profile.parse.dat) plus the overall permeability coefficient.
 
 Finally, we have only done the calculations for a single monolayer (water phase into the membrane center). If wish to get the values to move all the way through a symmetric membrane we can assume the values will be the same on the opposite side of the bilayer.
+
+>./windows/wham_run/overall_perm/full_profile_perm  directory  
+>tac ../free_energy_profile.parse.dat | awk '{print $1*-1,"",$2}' > tmp  
+>
 
 You can then create a full free energy and resistance profile like so:
 >here
