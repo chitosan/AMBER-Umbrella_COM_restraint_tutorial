@@ -84,9 +84,9 @@ As an aside, we can also check that we have the correct atom indices directly fr
 
 Run ParmEd:
 
->parmed.py -i details_parmed.in
+>parmed.py -i details_parmed.in > atom_list.out
 
-You will see that the N31 atom index values corresponds to those in ref_COM_file.RST
+You will see that in atom_list.out the N31 atom index values corresponds to those in ref_COM_file.RST
 
 Please go through the AMBER manual so that you know what each line in the ref_COM_file.RST means. Important flags are:
 >rk2=2.5    *restraint force constant*  
