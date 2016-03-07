@@ -243,8 +243,8 @@ And feed this back into the parse_fe_diff.py script.
 
 The values I obtain for 30 ns windows are:
 
-Gpen 3.47 kcal/mol (free energy at the center z=0)  
-Peff 0.1145 cm/s
+Gpen 3.27 kcal/mol (free energy at the center z=0)  
+Peff 0.159 cm/s
 
 Your values should be somewhere in this ballpark.
 
