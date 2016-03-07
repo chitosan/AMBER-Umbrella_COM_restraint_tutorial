@@ -21,7 +21,8 @@ http://pubs.acs.org/doi/abs/10.1021/jp903248s
 http://dx.doi.org/10.1016/j.bpj.2014.06.024
 
 # Step 1: Parameters
-First we need a starting membrane bilayer PDB file and the coordinates and parameters for methanol (./parameters directory).
+First we need a starting membrane bilayer PDB file and the coordinates and parameters for methanol.  
+>./parameters directory  
 
 You can follow the AMBER tutorial TUTORIAL A16: An Amber Lipid Force Field Tutorial: Lipid14 to obtain an equilibrated lipid bilayer.
 
@@ -34,7 +35,8 @@ Then use tleap to convert the resulting MOH.mol2 into an AMBER library file (MOH
 >tleap -f convert.leap
 
 # Step 2: Placement
-Next we place the methanol molecule at the center of the membrane (the z-distance between methanol and DMPC bilayer is zero) (./placement directory).  
+Next we place the methanol molecule at the center of the membrane (the z-distance between methanol and DMPC bilayer is zero).  
+>./placement directory  
 
 A study has shown that pulling from the middle of the membrane out allows faster convergence of PMFs rather than pulling from the water phase into the membrane:
 
@@ -69,7 +71,8 @@ Now run tleap:
 >tleap -f build.leap
 
 # Step 3: Pulling
-Now that we have our system constructed, we first equilibrate it then run a pulling step, which slowly moves the methanol molecule from z=0A out into the water phase (z=32A) (./pulling directory).  
+Now that we have our system constructed, we first equilibrate it then run a pulling step, which slowly moves the methanol molecule from z=0A out into the water phase (z=32A).  
+>./pulling directory  
 
 First, we need the distance restraint file. You can use the make_COM_file.py script to construct this. It contains the atom indices of the drug atoms (group 1 to be constrained) and the atom indices of the lipid N31 head group atoms (reference to constrain to). It also contains details of the harmonic restraint to apply and flags to turn on the umbrella COM method.
 
@@ -125,7 +128,8 @@ We can now extract windows with 1A spacing along the z-axis and run windows from
 If you downloaded the tar file, all outputs from the simulation have been moved into "./md_output" (minus the trajectory files).
 
 # Step 4: Windows
-First we need to extract starting points for each window run from the pulling trajectory (./windows directory).   
+First we need to extract starting points for each window run from the pulling trajectory.  
+>./windows directory  
 
 **Important:** We must create an imaged trajectory to extract these windows from in which the bilayer center-of-mass, as defined by N31 head group atoms, is imaged to the origin (0,0,0). This means that when we extract the position of the methanol molecule, we also know that this is the separation between the bilayer COM and the methanol too.
 
@@ -156,7 +160,8 @@ If you have multiple GPUs you may want to split these steps into parallel runs, 
 If you downloaded the tar file, all outputs from the simulation have been moved into "./md_output" (minus the trajectory files).
 
 # Step 5: Free energy profile
-Once the simulations are finished you can build the free energy profile with WHAM (go into windows/wham_run directory).
+Once the simulations are finished you can build the free energy profile with WHAM.  
+>./windows/wham_run directory  
 
 The simulations should output a file called "06_Prod_dist.dat" (the name is given in the 06_Prod.in input). This has the format:
 > *Frame#*  x:  (*x-coord*)   y:  (*y-coord*)   z:  (*z-coord*)   (*total-coord*)
