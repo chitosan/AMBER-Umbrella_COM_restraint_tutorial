@@ -161,7 +161,7 @@ If you downloaded the tar file, all outputs from the simulation have been moved 
 
 # Step 5: Free energy profile
 Once the simulations are finished you can build the free energy profile with WHAM.  
->./windows/wham_run directory  
+>./windows/md_output directory  
 
 The simulations should output a file called "06_Prod_dist.dat" (the name is given in the 06_Prod.in input). This has the format:
 > *Frame#*  x:  (*x-coord*)   y:  (*y-coord*)   z:  (*z-coord*)   (*total-coord*)
@@ -174,6 +174,8 @@ For WHAM and the next steps, we only need the z-dimension, so we can use an AWK 
 This is also possible for every window using the included bash script "fix_dist.sh".
 
 Once you have prod_dist.dat files for every window (format: *Frame#*  *z-dist*), we can run WHAM.
+
+>./windows/wham_run directory  
 
 For wham input, you need a metadata file with the following information:
 >*/path/to/file/distance.dat*   *restraint-position*    *force-constant*  
@@ -198,6 +200,20 @@ You can then extract just the PMF curve and plot like so:
 
 You should obtain a plot similar to this:
 ![Alt text](/figures/plot_free_energy_320.png?raw=true "Optional Title")
+
+To examine how well the overlap is between each window, we can create a histogram of the drug z-position.
+
+>./windows/wham_run/hist_plot directory  
+
+Use the run_hist.sh script to make a histogram from the prod_dist.dat files for each window (this calls the included generate_hist.py). You may need to check the file paths in run_hist.sh.
+
+>./run_hist.sh  
+
+You should get something like this:
+>xmgrace hist*dat  
+![Alt text](/figures/hist_plot.png?raw=true "Optional Title")
+
+We see that the overlap is suitable when using a 1A separation and 2.5 kcal/mol/A^2 force constant.
 
 #Step 6: Diffusion, resistance and overall permeability
 The final step computes first the diffusion along the z-axis, combines the result with the free energy profile data to obtain the resistance along the z-axis and finally integrates the resistance at each z-window to obtain an overall permeability coefficient estimate.
