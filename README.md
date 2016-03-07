@@ -256,4 +256,4 @@ Peff  0.18 ± 0.2 cm/s
 
 Finally, there have been a number of articles addressing the issue of obtaining converged PMF profiles which you should take note of. Try to extend window simulation time and perform as many independent repeats from different initial coordinates and velocities to be sure your profiles are converged.
 
-....papers here
+....paperz here
