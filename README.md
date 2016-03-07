@@ -317,5 +317,9 @@ Finally, there have been a number of articles addressing the issue of obtaining 
 
 A few papers you may want to read on the issues of convergence are linked below:
 
+http://pubs.acs.org/doi/abs/10.1021/ct2009208
+http://pubs.acs.org/doi/abs/10.1021/ct200316w
 
-...here....
+If you use the AMBER method and lipid force-field to generate PMFs for publication, please cite the relevant AMBER and Lipid14/Lipid16 references:
+
+http://pubs.acs.org/doi/abs/10.1021/ct4010307
