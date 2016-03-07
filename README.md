@@ -275,10 +275,10 @@ This will output the free energy curve (free_energy_profile.parse.dat), the diff
 Finally, we have only done the calculations for a single monolayer (water phase into the membrane center). If wish to get the values to move all the way through a symmetric membrane we can assume the values will be the same on the opposite side of the bilayer.
 
 >./windows/wham_run/overall_perm/full_profile_perm  directory  
->tac ../free_energy_profile.parse.dat | awk '{print $1*-1,"",$2}' > tmp  
+>tac ../free_energy_profile.parse.dat | awk '{print $1\*-1,"",$2}' > tmp  
 >cat tmp ../free_energy_profile.parse.dat > full_fe.dat  
 >rm tmp  
->tac ../../diffusion/all_diffusion_values.out | awk '{print $1*-1,"",$2}' > tmp  
+>tac ../../diffusion/all_diffusion_values.out | awk '{print $1\*-1,"",$2}' > tmp  
 >cat ../../diffusion/all_diffusion_values.out tmp > full_diffusion.dat  
 >rm tmp  
 
