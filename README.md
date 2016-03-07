@@ -273,12 +273,27 @@ Finally, we have only done the calculations for a single monolayer (water phase 
 
 >./windows/wham_run/overall_perm/full_profile_perm  directory  
 >tac ../free_energy_profile.parse.dat | awk '{print $1*-1,"",$2}' > tmp  
->
+>cat tmp ../free_energy_profile.parse.dat > full_fe.dat  
+>rm tmp  
+>tac ../../diffusion/all_diffusion_values.out | awk '{print $1*-1,"",$2}' > tmp  
+>cat ../../diffusion/all_diffusion_values.out tmp > full_diffusion.dat  
+>rm tmp  
 
-You can then create a full free energy and resistance profile like so:
->here
+>./parse_fe_diff.py -fe full_fe.dat -diff full_diffusion.dat -start -32 -end 32 -space 1  
 
-And feed this back into the parse_fe_diff.py script.
+Will output the result for the full bilayer.  
+
+The resulting free energy profile:  
+
+![Alt text](/figures/free_energy_full.png?raw=true "Optional Title")  
+
+The diffusion profile:  
+
+![Alt text](/figures/diffusion_full.png?raw=true "Optional Title")  
+
+The resistance profile:  
+
+![Alt text](/figures/resistance_full.png?raw=true "Optional Title")  
 
 The values I obtain for 30 ns windows are:
 
