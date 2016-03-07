@@ -264,13 +264,11 @@ Once we have done that calculation we integrate over each R(z) value to get an e
 
 I would urge you to do such calculations using a spreadsheet, so that you understand each step. A corresponding spreadsheet is enclosed.
 
-A script to perform each step is also enclosed, called parse_fe_diff.py. This reads in the free energy profile, the diffusion profile and takes the z-limits plus step (i.e. 0->32 A, 1 A step) then calculates the resistance and does the integration.  
-
-**Important:** The temperature of 303K is hard-coded into parse_fe_diff.py. I SHOULD UPDATE ...  
+A script to perform each step is also enclosed, called parse_fe_diff.py. This reads in the free energy profile, the diffusion profile and takes the z-limits plus step (i.e. 0->32 A, 1 A step) and the simulation temperature then calculates the resistance and does the integration.  
 
 >./windows/wham_run/overall_perm  directory  
 
->./parse_fe_diff.py -fe ../plot.dat -diff ../diffusion/all_diffusion_values.out -start 0 -end 32 -space 1  
+>./parse_fe_diff.py -fe ../plot.dat -diff ../diffusion/all_diffusion_values.out -start 0 -end 32 -space 1 -temp 303  
 
 This will output the free energy curve (free_energy_profile.parse.dat), the diffusion curve (diffusion_profile.parse.dat) and the resistance profile (resistance_profile.parse.dat) plus the overall permeability coefficient.
 
@@ -284,7 +282,7 @@ Finally, we have only done the calculations for a single monolayer (water phase 
 >cat ../../diffusion/all_diffusion_values.out tmp > full_diffusion.dat  
 >rm tmp  
 
->./parse_fe_diff.py -fe full_fe.dat -diff full_diffusion.dat -start -32 -end 32 -space 1  
+>./parse_fe_diff.py -fe full_fe.dat -diff full_diffusion.dat -start -32 -end 32 -space 1 -temp 303  
 
 Will output the result for the full bilayer.  
 
