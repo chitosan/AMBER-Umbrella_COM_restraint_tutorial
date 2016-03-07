@@ -186,7 +186,7 @@ You can then extract just the PMF curve and plot like so:
 >xmgrace plot_free_energy.dat
 
 You should obtain a plot similar to this:
-![Alt text](/figures/plot_free_energy.png?raw=true "Optional Title")
+![Alt text](/figures/plot_free_energy_320.png?raw=true "Optional Title")
 
 #Step 6: Diffusion, resistance and overall permeability
 The final step computes first the diffusion along the z-axis, combines the result with the free energy profile data to obtain the resistance along the z-axis and finally integrates the resistance at each z-window to obtain an overall permeability coefficient estimate.
