@@ -1,6 +1,8 @@
 # AMBER-Umbrella_COM_restraint_tutorial
 Tutorial to run AMBER umbrella COM restraint code and derive free energy of transfer profile for methanol through DMPC membrane.
 
+**PUT FIGURE HERE OF SYSTEM/PMF**  
+
 # Requirements:
 
 * AMBER16 or above (has COM umbrella restraint code)
@@ -8,7 +10,7 @@ Tutorial to run AMBER umbrella COM restraint code and derive free energy of tran
 * WHAM (http://membrane.urmc.rochester.edu/content/wham)
 
 # Introduction
-This tutorial uses the AMBER16 center-of-mass (COM) umbrella restraint code to determine the free energy of transfer profile for a methanol molecule through a DMPC membrane bilayer. The methanol molecule is first pulled from the center of the membrane out into the water phase. From the pulling step, we extract starting positions with methanol at 0, 1, 2, ..., 32 A from the membrane center. We run windows with methanol restrained at each of these positions. From the fluctuation in the z-position, we can construct the free energy profile using WHAM. Finally, we use the same information to derive the z-diffusion and z-resistance profiles and overall permeability coefficient.
+This tutorial uses the AMBER16 center-of-mass (COM) umbrella restraint code to determine the free energy of transfer profile for a methanol molecule through a DMPC membrane bilayer. The methanol molecule is first pulled from the center of the membrane out into the water phase. From the pulling step, we extract starting positions with methanol at 0, 1, 2, ..., 32 A from the membrane center. We run windows with methanol restrained at each of these positions. From the fluctuation in the z-position, we can construct the free energy profile using WHAM. Finally, we use the same information to derive the z-diffusion and z-resistance profiles and an estimate of the overall permeability coefficient.
 
 There is a great deal of literature available on running z-restraint simulations, which I would encourage you to consult. A few examples include:
 
@@ -19,26 +21,26 @@ http://pubs.acs.org/doi/abs/10.1021/jp903248s
 http://dx.doi.org/10.1016/j.bpj.2014.06.024
 
 # Step 1: Parameters
-First we need starting membrane bilayer PDB file and coordinates and parameters for methanol.
+First we need a starting membrane bilayer PDB file and the coordinates and parameters for methanol (./parameters directory).
 
 You can follow the AMBER tutorial TUTORIAL A16: An Amber Lipid Force Field Tutorial: Lipid14 to obtain an equilibrated lipid bilayer.
 
-Use antechamber to create AMBER parameters for methanol:
+Use antechamber to create AMBER parameters for methanol from the enclosed methanol PDB:
 
 >antechamber -i methanol.pdb -fi pdb -o MOH.mol2 -fo mol2 -c bcc -s 2
 
-Then use tleap to convert the resulting MOH.mol2 into MOH.off:
+Then use tleap to convert the resulting MOH.mol2 into an AMBER library file (MOH.off):
 
 >tleap -f convert.leap
 
 # Step 2: Placement
-Next we place the methanol molecule at the center of the membrane (z-distance between methanol and DMPC bilayer is zero).
+Next we place the methanol molecule at the center of the membrane (the z-distance between methanol and DMPC bilayer is zero) (./placement directory).  
 
 A study has shown that pulling from the middle of the membrane out allows faster convergence of PMFs rather than pulling from the water phase into the membrane:
 
 http://pubs.acs.org/doi/abs/10.1021/jp501622d
 
-You can use the python script to place the methanol molecule at z=0 from the DMPC bilayer COM:
+You can use the python script to place the methanol molecule at z=0 from the DMPC bilayer center-of-mass:
 
 >./com_placement.py -i DMPC_72_relax.pdb -d methanol.pdb -z 0.0 > moh_center.pdb
 
@@ -67,7 +69,7 @@ Now run tleap:
 >tleap -f build.leap
 
 # Step 3: Pulling
-Now that we have our system constructed, we first equilibrate it then run a pulling step, which slowly moves the methanol molecule from z=0A out into the water phase (z=32A).
+Now that we have our system constructed, we first equilibrate it then run a pulling step, which slowly moves the methanol molecule from z=0A out into the water phase (z=32A) (./pulling directory).  
 
 First, we need the distance restraint file. You can use the make_COM_file.py script to construct this. It contains the atom indices of the drug atoms (group 1 to be constrained) and the atom indices of the lipid N31 head group atoms (reference to constrain to). It also contains details of the harmonic restraint to apply and flags to turn on the umbrella COM method.
 
@@ -86,7 +88,7 @@ Run ParmEd:
 
 >parmed.py -i details_parmed.in > atom_list.out
 
-You will see that in atom_list.out the N31 atom index values corresponds to those in ref_COM_file.RST
+You can check that in atom_list.out the N31 atom index values corresponds to those in ref_COM_file.RST
 
 Please go through the AMBER manual so that you know what each line in the ref_COM_file.RST means. Important flags are:
 >rk2=2.5    *restraint force constant*  
@@ -98,7 +100,7 @@ You may notice that ref_COM_file.RST has settings "DISTHERE" - we will copy this
 
 Change DISTHERE to 0.0 in COM_dist.RST. 
 
-We also need a file for the pulling step COM_pull.RST. This is similar yet specifies a starting positon of 0 and a final position of 32, the force constant for pulling is also reduced to 1.1.
+We also need a file for the pulling step COM_pull.RST. This is similar to COM_dist.RST but specifies a starting positon of 0 and a final position of 32, the force constant for pulling is also reduced to 1.1.
 
 We now have the .RST files for equilibration (methanol is held at z=0) and for the pulling (methanol is moved from z=0 to z=32A).
 
@@ -120,8 +122,10 @@ Due to file sizes, the outputs are not provided here. You can check the pulling 
 
 We can now extract windows with 1A spacing along the z-axis and run windows from each.
 
+If you downloaded the tar file, all outputs from the simulation have been moved into "./md_output" (minus the trajectory files).
+
 # Step 4: Windows
-First we need to extract starting points for each window run from the pulling trajectory.  
+First we need to extract starting points for each window run from the pulling trajectory (./windows directory).   
 
 **Important:** We must create an imaged trajectory to extract these windows from in which the bilayer center-of-mass, as defined by N31 head group atoms, is imaged to the origin (0,0,0). This means that when we extract the position of the methanol molecule, we also know that this is the separation between the bilayer COM and the methanol too.
 
@@ -149,8 +153,10 @@ Now we can run each window for 30ns using the 06_Prod.in input and run_window_cu
 
 If you have multiple GPUs you may want to split these steps into parallel runs, or run each over a CPU cluster.
 
+If you downloaded the tar file, all outputs from the simulation have been moved into "./md_output" (minus the trajectory files).
+
 # Step 5: Free energy profile
-Once the simulations are finished you can build the free energy profile with WHAM.
+Once the simulations are finished you can build the free energy profile with WHAM (go into windows/wham_run directory).
 
 The simulations should output a file called "06_Prod_dist.dat" (the name is given in the 06_Prod.in input). This has the format:
 > *Frame#*  x:  (*x-coord*)   y:  (*y-coord*)   z:  (*z-coord*)   (*total-coord*)
@@ -171,7 +177,7 @@ For wham input, you need a metadata file with the following information:
 >../md_output/dist_31.0/prod_dist.dat   31.0  5.0  
 > ...etc...
 
-You will notice that the force-constant value in metadata.dat is double that (5 kcal/mol/A) compared to that used in the simulations. This is due to differences in how restraints are defined in AMBER vs WHAM. Please see the WHAM documentation for more information.
+You will notice that the force-constant value in metadata.dat is double that (5 kcal/mol/A^2) compared to that used in the simulations. This is due to differences in how restraints are defined in AMBER vs WHAM. Please see the WHAM documentation for more information.
 
 You can prepare the metadata.dat file using the included script prepare_meta.sh - you may need to update this with the correct paths to your prod_dist.dat files.
 
