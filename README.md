@@ -176,7 +176,7 @@ You will notice that the force-constant value in metadata.dat is double that (5 
 You can prepare the metadata.dat file using the included script prepare_meta.sh - you may need to update this with the correct paths to your prod_dist.dat files.
 
 Now run WHAM:
->wham 0 32 160 0.00000001 303 0 metadata.dat out.pmf  
+>wham 0 32 320 0.00000001 303 0 metadata.dat out.pmf  
 >  
 >Where the settings are:  
 >wham (*start*) (*end*) (*windows*) (*tolerance*) (*temperature*) (*padding*) (*input_metadata*) (*output*)
