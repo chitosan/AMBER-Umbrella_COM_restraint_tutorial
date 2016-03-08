@@ -83,11 +83,11 @@ elif end>0 and space<0:
 RT=0.0019858775*temperature
 
 # Check that input file is in correct format
-with open(fe_input) as f_in:
-        line = f_in.readline()
-if len(line.split())>2:
-        print 'Error: input file contains >2 columns'
-        sys.exit(1)
+#with open(fe_input) as f_in:
+#        line = f_in.readline()
+#if len(line.split())>2:
+#        print 'Error: input file contains >2 columns'
+#        sys.exit(1)
 
 with open(diff_input) as f_in:
 	line = f_in.readline()
