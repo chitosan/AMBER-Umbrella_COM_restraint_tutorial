@@ -12,7 +12,7 @@ Tutorial to run the AMBER umbrella COM restraint code and derive the free energy
 # Files
 You can download this tutorial from github, the resulting zip file will not have any outputs from the MD simulations described below.
 
-Alternatively, you can download [this](https://www.google.com "AMBER COM tutorial tgz") tarball. This has all of the same files, in addition all outputs from MD simulations are included with the exception of trajectory files (7 GB).
+Alternatively, you can download [this](https://www.google.com "AMBER COM tutorial tgz") tarball. This has all of the same files, in addition all outputs from MD simulations are included with the exception of trajectory files (5 GB).
 
 Note - do not treat included python scripts as black boxes. They've had some limited, but not extensive, bug testing. 
 
@@ -181,6 +181,8 @@ For WHAM and the next steps, we only need the z-dimension, so we can use an AWK 
 >awk '{print $1,"",$7}' 06_Prod_dist.dat > prod_dist.dat
 
 This is also possible for every window using the included bash script "fix_dist.sh".
+
+**Note:** If you downloaded the tar file, the 06_Prod_dist.dat files are included but the prod_dist.dat files have been deleted to save space. These are easy to regenerate using the fix_dist.sh file in mdout directory.
 
 Once you have prod_dist.dat files for every window (format: *Frame#*  *z-dist*), we can run WHAM.
 
