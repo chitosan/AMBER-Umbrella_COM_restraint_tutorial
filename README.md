@@ -19,11 +19,11 @@ This tutorial uses the AMBER16 center-of-mass (COM) umbrella restraint code to d
 
 There is a great deal of literature available on running z-restraint simulations, which I would encourage you to consult. A few examples include:
 
-Bemporad *et al*: http://pubs.acs.org/doi/abs/10.1021/jp035260s
+* Bemporad *et al*: http://pubs.acs.org/doi/abs/10.1021/jp035260s
 
-Orsi *et al*: http://pubs.acs.org/doi/abs/10.1021/jp903248s
+* Orsi *et al*: http://pubs.acs.org/doi/abs/10.1021/jp903248s
 
-Carpenter *et al*: http://dx.doi.org/10.1016/j.bpj.2014.06.024
+* Carpenter *et al*: http://dx.doi.org/10.1016/j.bpj.2014.06.024
 
 # Step 1: Parameters
 First we need a starting membrane bilayer PDB file and the coordinates and parameters for methanol.  
