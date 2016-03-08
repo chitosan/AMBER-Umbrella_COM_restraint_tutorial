@@ -287,6 +287,7 @@ This will output the free energy curve (free_energy_profile.parse.dat), the diff
 Finally, we have only done the calculations for a single monolayer (water phase into the membrane center). If wish to get the values to move all the way through a symmetric membrane we can assume the values will be the same on the opposite side of the bilayer due to symmetry.
 
 >Directory: **./windows/wham_run/overall_perm/full_profile_perm**  
+
 >tac ../free_energy_profile.parse.dat | awk '{print $1\*-1,"",$2}' > tmp  
 >cat tmp ../free_energy_profile.parse.dat > full_fe.dat  
 >rm tmp  
@@ -335,5 +336,5 @@ A few papers you may want to read on the issues of convergence are linked below:
 * Dickson *et al*: http://pubs.acs.org/doi/abs/10.1021/ct4010307
 
 
-Acknowledgements- thanks to the following for adding in the COM umbrella restraint code, testing of the tutorial and general work on simulation of lipids in AMBER:  
+Acknowledgements - thanks to the following for adding in the COM umbrella restraint code, testing of the tutorial and general work on simulation of lipids in AMBER:  
 *Ross Walker, Ian Gould, Charles Lin, Ben Madej, Aage Skjevik, Knut Teigen, Philip Morris, Mariarosaria Ferraro.*
