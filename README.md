@@ -121,6 +121,8 @@ The inputs and run script are provided. Please also examine the input files, imp
 You can then run both the equilibration (heat, hold methanol at z=0 for 100ps) and the pulling (move methanol from z=0 to z=32A  over 32ns of simulation) with the following bash script:
 >./run_pull.sh
 
+Note that the pulling rate is implicitely set by the total pull distance (32A, as set in COM_pull.RST) and the total simulation time (32ns, as set in 05_Pull.in). The pulling rate here is then 1A/ns.
+
 You will have to modify GPU / AMBERHOME specific information, or make it suitable for your cluster.
 
 Due to file sizes, the outputs are not provided here. You can check the pulling step has worked by plotting the z-position:
