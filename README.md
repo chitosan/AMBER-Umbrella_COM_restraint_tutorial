@@ -222,7 +222,7 @@ You should get something like this:
 
 We see that the overlap is suitable when using a 1A separation and 2.5 kcal/mol/A^2 force constant.
 
-**Important:** The limits 0-> 32A and bin number 160 are hard-coded into generate_hist.py, you will need to change this for windows at positions along the z-axis outside of these limits.  
+**Important:** The limits 0-> 32A and bin number 160 are hard-coded into generate_hist.py, you will need to change this for windows at positions along the z-axis outside of these limits in your own simulations.  
 
 #Step 6: Diffusion, resistance and overall permeability
 The final step computes first the diffusion along the z-axis, combines the result with the free energy profile data to obtain the resistance along the z-axis and finally integrates the resistance at each z-window to obtain an overall permeability coefficient estimate.
