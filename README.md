@@ -223,7 +223,7 @@ The final step computes first the diffusion along the z-axis, combines the resul
 For details on the position-dependent diffusion and resistance calculations please see the following publication from Gerhard Hummer:
 http://iopscience.iop.org/article/10.1088/1367-2630/7/1/034/meta
 
-The following methods is based on that used by Carpenter et al (also linked at the top of this tutorial):
+The following methods is based on that used by Carpenter *et al* (also linked at the top of this tutorial):
 http://dx.doi.org/10.1016/j.bpj.2014.06.024
 
 The position-dependent diffusion is calculated as:  
@@ -307,7 +307,7 @@ P(eff): 0.159 cm/s
 
 Your values should be somewhere in this ballpark.
 
-These compare favourably with those obtained by Orsi et al (also linked at the top of this tutorial):
+These compare favourably with those obtained by Orsi *et al* (also linked at the top of this tutorial):
 http://pubs.acs.org/doi/abs/10.1021/jp903248s
 
 G(pen): ~3.3 kcal/mol  
