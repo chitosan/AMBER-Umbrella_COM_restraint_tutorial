@@ -19,11 +19,11 @@ This tutorial uses the AMBER16 center-of-mass (COM) umbrella restraint code to d
 
 There is a great deal of literature available on running z-restraint simulations, which I would encourage you to consult. A few examples include:
 
-http://pubs.acs.org/doi/abs/10.1021/jp035260s
+Bemporad *et al*: http://pubs.acs.org/doi/abs/10.1021/jp035260s
 
-http://pubs.acs.org/doi/abs/10.1021/jp903248s
+Orsi *et al*: http://pubs.acs.org/doi/abs/10.1021/jp903248s
 
-http://dx.doi.org/10.1016/j.bpj.2014.06.024
+Carpenter *et al*: http://dx.doi.org/10.1016/j.bpj.2014.06.024
 
 # Step 1: Parameters
 First we need a starting membrane bilayer PDB file and the coordinates and parameters for methanol.  
@@ -45,7 +45,7 @@ Next we place the methanol molecule at the center of the membrane (the z-distanc
 
 A study has shown that pulling from the middle of the membrane out allows faster convergence of PMFs rather than pulling from the water phase into the membrane:
 
-http://pubs.acs.org/doi/abs/10.1021/jp501622d
+Filipe *et al*: http://pubs.acs.org/doi/abs/10.1021/jp501622d
 
 You can use the python script to place the methanol molecule at z=0 from the DMPC bilayer center-of-mass:
 
@@ -324,13 +324,13 @@ Finally, there have been a number of articles addressing the issue of obtaining 
 
 A few papers you may want to read on the issues of convergence are linked below:
 
-http://pubs.acs.org/doi/abs/10.1021/ct2009208  
+Paloncyova *et al*: http://pubs.acs.org/doi/abs/10.1021/ct2009208  
 
-http://pubs.acs.org/doi/abs/10.1021/ct200316w
+Neale *et al*: http://pubs.acs.org/doi/abs/10.1021/ct200316w
 
 **Important:** If you use the AMBER method and lipid force-field to generate PMFs for publication, please cite the relevant AMBER and Lipid14/Lipid16 references:  
 
-http://pubs.acs.org/doi/abs/10.1021/ct4010307
+Dickson *et al*: http://pubs.acs.org/doi/abs/10.1021/ct4010307
 
 
 Acknowledgements- thanks to the following for adding in the COM umbrella restraint code, testing of the tutorial and general work on simulation of lipids in AMBER:  
