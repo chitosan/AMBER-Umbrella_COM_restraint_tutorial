@@ -321,6 +321,9 @@ http://pubs.acs.org/doi/abs/10.1021/ct2009208
 
 http://pubs.acs.org/doi/abs/10.1021/ct200316w
 
-If you use the AMBER method and lipid force-field to generate PMFs for publication, please cite the relevant AMBER and Lipid14/Lipid16 references:  
+**Important:** If you use the AMBER method and lipid force-field to generate PMFs for publication, please cite the relevant AMBER and Lipid14/Lipid16 references:  
 
 http://pubs.acs.org/doi/abs/10.1021/ct4010307
+
+Acknowledgements- Thanks to the following for adding in the COM umbrella restraint code, testing of the tutorial and general work on simulation of lipids in AMBER:
+*Ross Walker, Ian Gould, Charles Lin, Ben Madej, Aage Skjevik, Knut Teigen, Philip Morris.*
