@@ -27,7 +27,7 @@ There is a great deal of literature available on running z-restraint simulations
 
 # Step 1: Parameters
 First we need a starting membrane bilayer PDB file and the coordinates and parameters for methanol.  
->./parameters directory  
+>Directory: **./parameters**  
 
 You can follow the AMBER tutorial TUTORIAL A16: An Amber Lipid Force Field Tutorial: Lipid14 to obtain an equilibrated lipid bilayer.
 
