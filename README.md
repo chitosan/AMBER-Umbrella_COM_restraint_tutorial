@@ -1,7 +1,7 @@
 # AMBER-Umbrella_COM_restraint_tutorial
 Tutorial to run the AMBER umbrella COM restraint code and derive the free energy of transfer profile for methanol through a DMPC membrane.
 
-![Alt text](/figures/moh_profile.png?raw=true "Optional Title")
+![Alt text](/figures/moh_profile.png?raw=true "Methanol-DMPC")
 
 # Requirements:
 
@@ -126,7 +126,7 @@ You will have to modify GPU / AMBERHOME specific information, or make it suitabl
 Due to file sizes, the outputs are not provided here. You can check the pulling step has worked by plotting the z-position:
 >xmgrace 05_Pull_dist.dat
 
-![Alt text](/figures/moh_pull.png?raw=true "Optional Title")
+![Alt text](/figures/moh_pull.png?raw=true "Pulling: distance vs time")
 
 We can now extract windows with 1A spacing along the z-axis and run windows from each.
 
@@ -204,7 +204,7 @@ You can then extract just the PMF curve and plot like so:
 >xmgrace plot_free_energy.dat
 
 You should obtain a plot similar to this:
-![Alt text](/figures/plot_free_energy_320.png?raw=true "Optional Title")
+![Alt text](/figures/plot_free_energy_320.png?raw=true "PMF plot")
 
 To examine how well the overlap is between each window, we can create a histogram of the drug z-position.
 
@@ -216,7 +216,7 @@ Use the run_hist.sh script to make a histogram from the prod_dist.dat files for 
 
 You should get something like this:
 >xmgrace hist*dat  
-![Alt text](/figures/hist_plot.png?raw=true "Optional Title")
+![Alt text](/figures/hist_plot.png?raw=true "Histograms")
 
 We see that the overlap is suitable when using a 1A separation and 2.5 kcal/mol/A^2 force constant.
 
@@ -249,7 +249,7 @@ Since we have 30 ns of data with 1 ns window, there are a total of 29 fits. You 
 >./auto_covar.py -i prod_dist.dat -w 500000 -t 0.002 -skip 0 -v 1  
 >xmgrace corr.0.dat
 
-![Alt text](/figures/autocov_32.0.png?raw=true "Optional Title")
+![Alt text](/figures/autocov_32.0.png?raw=true "Autocovariance plot")
 
 *... you may want to kill the auto_covar.py script with CTRL+C as it is very slow when using all samples.*
 
@@ -297,15 +297,15 @@ Will output the result for the full bilayer.
 
 The resulting free energy profile:  
 
-![Alt text](/figures/free_energy_full.png?raw=true "Optional Title")  
+![Alt text](/figures/free_energy_full.png?raw=true "PMF plot")  
 
 The diffusion profile:  
 
-![Alt text](/figures/diffusion_full.png?raw=true "Optional Title")  
+![Alt text](/figures/diffusion_full.png?raw=true "Diffusion plot")  
 
 The resistance profile:  
 
-![Alt text](/figures/resistance_full.png?raw=true "Optional Title")  
+![Alt text](/figures/resistance_full.png?raw=true "Resistance plot")  
 
 The values I obtain using 30 ns windows are:
 
@@ -324,13 +324,13 @@ Finally, there have been a number of articles addressing the issue of obtaining 
 
 A few papers you may want to read on the issues of convergence are linked below:
 
-Paloncyova *et al*: http://pubs.acs.org/doi/abs/10.1021/ct2009208  
+* Paloncyova *et al*: http://pubs.acs.org/doi/abs/10.1021/ct2009208  
 
-Neale *et al*: http://pubs.acs.org/doi/abs/10.1021/ct200316w
+* Neale *et al*: http://pubs.acs.org/doi/abs/10.1021/ct200316w
 
 **Important:** If you use the AMBER method and lipid force-field to generate PMFs for publication, please cite the relevant AMBER and Lipid14/Lipid16 references:  
 
-Dickson *et al*: http://pubs.acs.org/doi/abs/10.1021/ct4010307
+* Dickson *et al*: http://pubs.acs.org/doi/abs/10.1021/ct4010307
 
 
 Acknowledgements- thanks to the following for adding in the COM umbrella restraint code, testing of the tutorial and general work on simulation of lipids in AMBER:  
