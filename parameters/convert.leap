@@ -1,0 +1,4 @@
+source leaprc.gaff
+MOH=loadmol2 MOH.mol2
+saveoff MOH MOH.off
+quit
