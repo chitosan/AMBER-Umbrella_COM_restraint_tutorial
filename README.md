@@ -332,4 +332,4 @@ A few papers you may want to read on the issues of convergence are linked below:
 
 
 Acknowledgements- thanks to the following for adding in the COM umbrella restraint code, testing of the tutorial and general work on simulation of lipids in AMBER:  
-*Ross Walker, Ian Gould, Charles Lin, Ben Madej, Aage Skjevik, Knut Teigen, Philip Morris.*
+*Ross Walker, Ian Gould, Charles Lin, Ben Madej, Aage Skjevik, Knut Teigen, Philip Morris, Mariarosaria Ferraro.*
