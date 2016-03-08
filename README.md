@@ -45,7 +45,7 @@ Next we place the methanol molecule at the center of the membrane (the z-distanc
 
 A study has shown that pulling from the middle of the membrane out allows faster convergence of PMFs rather than pulling from the water phase into the membrane:
 
-Filipe *et al*: http://pubs.acs.org/doi/abs/10.1021/jp501622d
+* Filipe *et al*: http://pubs.acs.org/doi/abs/10.1021/jp501622d
 
 You can use the python script to place the methanol molecule at z=0 from the DMPC bilayer center-of-mass:
 
