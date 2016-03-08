@@ -1,0 +1,3 @@
+parm DMPC_MOH.prmtop
+printDetails *
+quit
