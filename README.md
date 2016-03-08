@@ -12,7 +12,7 @@ Tutorial to run the AMBER umbrella COM restraint code and derive the free energy
 # Files
 You can download this tutorial from github, the resulting zip file will not have any outputs from the MD simulations described below.
 
-Alternatively, you can download [this](https://www.google.com "AMBER COM tutorial tgz") tarball. This has all of the same files, in addition all outputs from MD simulations are included with the exception of trajectory files (5 GB).
+Alternatively, you can download [this](https://drive.google.com/file/d/0B7pMJfmYx1e9SFhVSlMyRkIwUVE/view?usp=sharing "AMBER COM tutorial tgz") tarball. This has all of the same files, in addition all outputs from MD simulations are included with the exception of trajectory files (5 GB).
 
 Note - do not treat included python scripts as black boxes. They've had some limited, but not extensive, bug testing. 
 
