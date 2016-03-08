@@ -41,7 +41,7 @@ Then use tleap to convert the resulting MOH.mol2 into an AMBER library file (MOH
 
 # Step 2: Placement
 Next we place the methanol molecule at the center of the membrane (the z-distance between methanol and DMPC bilayer is zero).  
->./placement directory  
+>Directory: **./placement**  
 
 A study has shown that pulling from the middle of the membrane out allows faster convergence of PMFs rather than pulling from the water phase into the membrane:
 
@@ -77,7 +77,7 @@ Now run tleap:
 
 # Step 3: Pulling
 Now that we have our system constructed, we first equilibrate it then run a pulling step, which slowly moves the methanol molecule from z=0A out into the water phase (z=32A).  
->./pulling directory  
+>Directory: **./pulling**  
 
 First, we need the distance restraint file. You can use the make_COM_file.py script to construct this. It contains the atom indices of the drug atoms (group 1 to be constrained) and the atom indices of the lipid N31 head group atoms (reference to constrain to). It also contains details of the harmonic restraint to apply and flags to turn on the umbrella COM method.
 
@@ -136,7 +136,7 @@ If you downloaded the tar file, all outputs from the simulation have been moved 
 
 # Step 4: Windows
 First we need to extract starting points for each window run from the pulling trajectory.  
->./windows directory  
+>Directory: **./windows**  
 
 **Important:** We must create an imaged trajectory to extract these windows from in which the bilayer center-of-mass, as defined by N31 head group atoms, is imaged to the origin (0,0,0). This means that when we extract the position of the methanol molecule, we also know that this is the separation between the bilayer COM and the methanol too.
 
@@ -168,7 +168,7 @@ If you downloaded the tar file, all outputs from the simulation have been moved 
 
 # Step 5: Free energy profile
 Once the simulations are finished you can build the free energy profile with WHAM.  
->./windows/md_output directory  
+>Directory: **./windows/md_output**  
 
 The simulations should output a file called "06_Prod_dist.dat" (the name is given in the 06_Prod.in input). This has the format:
 > *Frame#*  x:  (*x-coord*)   y:  (*y-coord*)   z:  (*z-coord*)   (*total-coord*)
@@ -182,7 +182,7 @@ This is also possible for every window using the included bash script "fix_dist.
 
 Once you have prod_dist.dat files for every window (format: *Frame#*  *z-dist*), we can run WHAM.
 
->./windows/wham_run directory  
+>Directory: **./windows/wham_run**  
 
 For wham input, you need a metadata file with the following information:
 >*/path/to/file/distance.dat*   *restraint-position*    *force-constant*  
@@ -210,7 +210,7 @@ You should obtain a plot similar to this:
 
 To examine how well the overlap is between each window, we can create a histogram of the drug z-position.
 
->./windows/wham_run/hist_plot directory  
+>Directory: **./windows/wham_run/hist_plot**  
 
 Use the run_hist.sh script to make a histogram from the prod_dist.dat files for each window (this calls the included generate_hist.py). You may need to check the file paths in run_hist.sh.
 
@@ -227,7 +227,7 @@ We see that the overlap is suitable when using a 1A separation and 2.5 kcal/mol/
 #Step 6: Diffusion, resistance and overall permeability
 The final step computes first the diffusion along the z-axis, combines the result with the free energy profile data to obtain the resistance along the z-axis and finally integrates the resistance at each z-window to obtain an overall permeability coefficient estimate.
 
->./windows/wham_run/diffusion directory  
+>Directory: **./windows/wham_run/diffusion**  
 
 For details on the position-dependent diffusion and resistance calculations please see the following publication from Gerhard Hummer:
 http://iopscience.iop.org/article/10.1088/1367-2630/7/1/034/meta
@@ -276,7 +276,7 @@ I would urge you to do such calculations using a spreadsheet, so that you unders
 
 A script to perform each step is also enclosed, called parse_fe_diff.py. This reads in the free energy profile, the diffusion profile and takes the z-limits plus step (i.e. 0->32 A, 1 A step) and the simulation temperature then calculates the resistance and does the integration.  
 
->./windows/wham_run/overall_perm  directory  
+>Directory: **./windows/wham_run/overall_perm**  
 
 >./parse_fe_diff.py -fe ../plot.dat -diff ../diffusion/all_diffusion_values.out -start 0 -end 32 -space 1 -temp 303  
 
@@ -284,7 +284,7 @@ This will output the free energy curve (free_energy_profile.parse.dat), the diff
 
 Finally, we have only done the calculations for a single monolayer (water phase into the membrane center). If wish to get the values to move all the way through a symmetric membrane we can assume the values will be the same on the opposite side of the bilayer due to symmetry.
 
->./windows/wham_run/overall_perm/full_profile_perm  directory  
+>Directory: **./windows/wham_run/overall_perm/full_profile_perm**  
 >tac ../free_energy_profile.parse.dat | awk '{print $1\*-1,"",$2}' > tmp  
 >cat tmp ../free_energy_profile.parse.dat > full_fe.dat  
 >rm tmp  
