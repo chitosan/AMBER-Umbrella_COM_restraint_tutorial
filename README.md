@@ -3,7 +3,7 @@ Tutorial to run the AMBER umbrella COM restraint code and derive the free energy
 
 ![Alt text](/figures/moh_profile.png?raw=true "Methanol-DMPC")
 
-# Requirements:
+# Requirements
 
 * AMBER16 or above (has COM umbrella restraint code)
 * Python 2.7 (https://www.continuum.io/downloads)
