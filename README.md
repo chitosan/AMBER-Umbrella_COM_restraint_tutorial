@@ -10,7 +10,7 @@ Tutorial to run the AMBER umbrella COM restraint code and derive the free energy
 * WHAM (http://membrane.urmc.rochester.edu/content/wham)
 
 # Files
-You can download this tutorial from github, the resulting zip file will not have any trajectories from the MD simulations described below.
+You can download this tutorial from github, the resulting zip file will not have any trajectories from the MD simulations described below due to size constraints.
 
 
 # Introduction
