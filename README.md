@@ -328,6 +328,11 @@ The resistance profile:
 
 ![Alt text](/figures/resistance_full.png?raw=true "Resistance plot")  
 
+The values using 5 ns windows are:  
+
+G(pen): **3.06 kcal/mol** (free energy at the center z=0)  
+P(eff): **0.132 cm/s**  
+
 The values I obtain using 30 ns windows are:
 
 G(pen): **3.27 kcal/mol** (free energy at the center z=0)  
