@@ -1,0 +1,1 @@
+./parse_fe_diff.py -fe ../plot.dat -diff ../diffusion/all_diffusion_values.out -start 0 -end 32 -space 2 -temp 303
