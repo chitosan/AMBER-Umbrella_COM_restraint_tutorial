@@ -10,11 +10,10 @@ Tutorial to run the AMBER umbrella COM restraint code and derive the free energy
 * WHAM (http://membrane.urmc.rochester.edu/content/wham)
 
 # Files
-You can download this tutorial from github, the resulting zip file will not have any trajectories from the MD simulations described below due to size constraints.
-
+You can download this tutorial from github, the resulting zip file will not have any trajectories from the MD simulations described below due to file size limits.
 
 # Introduction
-This tutorial uses the AMBER16 center-of-mass (COM) umbrella restraint code to determine the free energy of transfer profile for a methanol molecule through a DMPC membrane bilayer. The methanol molecule is first pulled from the center of the membrane out into the water phase. From the pulling step, we extract starting positions with methanol at 0, 1, 2, ..., 32 A from the membrane center. We run windows with methanol restrained at each of these positions. From the fluctuation in the z-position, we can construct the free energy profile using WHAM. Finally, we use the same information to derive the z-diffusion and z-resistance profiles and an estimate of the overall permeability coefficient.
+This tutorial uses the AMBER16 center-of-mass (COM) umbrella restraint code to determine the free energy of transfer profile for a methanol molecule through a DMPC membrane bilayer. The methanol molecule is first pulled from the center of the membrane out into the water phase. From the pulling step, we extract starting positions with methanol at 0, 2, 4, ..., 32 A from the membrane center. We run windows with methanol restrained at each of these positions. From the fluctuation in the z-position, we can construct the free energy profile using WHAM. Finally, we use the same information to derive the z-diffusion and z-resistance profiles and an estimate of the overall permeability coefficient.
 
 There is a great deal of literature available on running z-restraint simulations, which I would encourage you to consult. A few examples include:
 
@@ -129,9 +128,9 @@ You can check the pulling step has worked by plotting the z-position:
 
 ![Alt text](/figures/moh_pull.png?raw=true "Pulling: distance vs time")
 
-We can now extract windows with 1A spacing along the z-axis and run windows from each.
+We can now extract windows with 2A spacing along the z-axis and run windows from each.
 
-If you downloaded the tar file, all outputs from the simulation have been moved into "./md_output" (minus the trajectory files).
+All outputs from the simulation have been moved into "./md_output" (minus the trajectory files).
 
 # Step 4: Windows
 First we need to extract starting points for each window run from the pulling trajectory.  
@@ -152,19 +151,21 @@ Then:
 This should output two files: the imaged trajectory from which we extract the snapshots, and the c0.out file which contains the postion of the methanol at each frame of the trajectory. We also know that this corresponds to the separation between the methanol and bilayer center-of-mass.
 
 We can extract the window starting points using extract_window.py:
->./extract_window.py -i bilayer_zero.nc -p DMPC_MOH.prmtop -d c0.out -start 0 -end 32 -space 1
+>./extract_window.py -i bilayer_zero.nc -p DMPC_MOH.prmtop -d c0.out -start 0 -end 32 -space 2
 
-This will output frames with the methanol at 0, 1, 2, ..., 32A from the bilayer center-of-mass. These restarts are provided.
+This will output frames with the methanol at 0, 2, 4, ..., 32A from the bilayer center-of-mass. These restarts are provided.
 
-Now we can run each window for 30ns using the 06_Prod.in input and run_window_cuda.sh bash run script.  
+Now we can run each window for 5ns using the 06_Prod.in input and run_window_cuda.sh bash run script.  
 
 **Important:** You should run this using a COM_dist.RST file which is a copy of ref_COM_file.RST (i.e. it contains DISTHERE which gets substituted for the correct distance for each window).
 
+**Sampling:** For the purposes of the tutorial, the windows are separated by 2A, with each window being run to 5ns and the z-position being written every 10th step (istep=10). However to obtain a better converged profile, I recommend 1A spacing, 30ns run time (at a minimum, ideally 100ns or more) and istep=1. We will constrast results from 5ns versus 30ns run time later.
+
 >./run_window_cuda.sh
 
-If you have multiple GPUs you may want to split these steps into parallel runs, or run each over a CPU cluster. Each window takes roughly 12 hours, there are 32 windows. This may of course take a substantial amount of time depending on your available resource. You can skip running the simulations if you prefer given that all outputs, with the exception of trajectories, are provided in the tarball.
+If you have multiple GPUs you may want to split these steps into parallel runs, or run each over a CPU cluster. Each window takes roughly 2 hours, there are 17 windows. You can skip running the simulations if you prefer given that all outputs, with the exception of trajectories, are provided.
 
-If you downloaded the tar file, all outputs from the simulation have been moved into "./md_output" (minus the trajectory files).
+All outputs from the simulation have been moved into "./md_output" (minus the trajectory files). They are also zipped up, use the "unzip.sh" script to extract each dist directory.
 
 # Step 5: Free energy profile
 Once the simulations are finished you can build the free energy profile with WHAM.  
@@ -173,14 +174,12 @@ Once the simulations are finished you can build the free energy profile with WHA
 The simulations should output a file called "06_Prod_dist.dat" (the name is given in the 06_Prod.in input). This has the format:
 > *Frame#*  x:  (*x-coord*)   y:  (*y-coord*)   z:  (*z-coord*)   (*total-coord*)
 
-Where each coord entry is the distance between the methanol and bilayer COM in each dimension. In this tutorial, we are only interested on the z-dimension. In the 06_Prod.in file, the setting to write to this file is istep1=1, so distances are written every single step (0.002 ps) meaning the resulting file can become large. However if possible, it is better to write this data frequently (at least every 2 ps).
+Where each coord entry is the distance between the methanol and bilayer COM in each dimension. In this tutorial, we are only interested on the z-dimension. In the 06_Prod.in file, the setting to write to this file is istep1=10, so distances are written every 10th step (0.02 ps) meaning the resulting file can become large. If possible, it is better to write this data frequently (perhaps even every single step).  
 
 For WHAM and the next steps, we only need the z-dimension, so we can use an AWK script to extract this per window:
 >awk '{print $1,"",$7}' 06_Prod_dist.dat > prod_dist.dat
 
 This is also possible for every window using the included bash script "fix_dist.sh".
-
-**Note:** If you downloaded the tar file, the 06_Prod_dist.dat files are included but the prod_dist.dat files have been deleted to save space. These are easy to regenerate using the fix_dist.sh file in mdout directory.
 
 Once you have prod_dist.dat files for every window (format: *Frame#*  *z-dist*), we can run WHAM.
 
@@ -190,7 +189,7 @@ For wham input, you need a metadata file with the following information:
 >*/path/to/file/distance.dat*   *restraint-position*    *force-constant*  
 >eg:  
 >../md_output/dist_32.0/prod_dist.dat   32.0  5.0  
->../md_output/dist_31.0/prod_dist.dat   31.0  5.0  
+>../md_output/dist_30.0/prod_dist.dat   30.0  5.0  
 > ...etc...
 
 You will notice that the force-constant value in metadata.dat is double that (5 kcal/mol/A^2) compared to that used in the simulations. This is due to differences in how restraints are defined in AMBER vs WHAM. Please see the WHAM documentation for more information.
@@ -208,6 +207,9 @@ You can then extract just the PMF curve and plot like so:
 >xmgrace plot_free_energy.dat
 
 You should obtain a plot similar to this:
+![Alt text](/windows/wham_run/plot_free_energy.png?raw=true "PMF plot")
+
+You will notice how shaky (unconverged) the profile is, below is the result for 30ns windows with 1A spacing and istep=1.
 ![Alt text](/figures/plot_free_energy_320.png?raw=true "PMF plot")
 
 To examine how well the overlap is between each window, we can create a histogram of the drug z-position.
@@ -220,9 +222,12 @@ Use the run_hist.sh script to make a histogram from the prod_dist.dat files for 
 
 You should get something like this:
 >xmgrace hist*dat  
+![Alt text](/windows/wham_run/hist_plot/hist_plot.png?raw=true "PMF plot")
+
+Again, you will notice the poor overlap of the windows. Below is the result for 30ns.
 ![Alt text](/figures/hist_plot.png?raw=true "Histograms")
 
-We see that the overlap is suitable when using a 1A separation and 2.5 kcal/mol/A^2 force constant.
+We see that the overlap is suitable when using 30ns windows, 1A separation and 2.5 kcal/mol/A^2 force constant.
 
 **Important:** The limits 0-> 32A and bin number 160 are hard-coded into generate_hist.py, you will need to change this for windows at positions along the z-axis outside of these limits in your own simulations.  
 
@@ -244,20 +249,18 @@ With 〈Z〉 the average of the reaction coordinate Z, var(Z) the variance of th
 
 We calculate the autocovarince of the Z-position with increasing lag-time and perform a least-squares-fit to the log of the resulting decay curve to obtain tau(Z). This process is repeated over separate slices of the full trajectory to obtain an average tau(Z) value per window.
 
-If you ran 06_Prod.in for the full 30ns, with istep1=1, then the final output distance file will have 15000000 entries (i.e. a Z-position for every 0.002 ps step).
+If you ran 06_Prod.in for 5ns, with istep1=10, then the final output distance file will have 250000 entries (i.e. a Z-position for every 0.02 ps).
 
-We use a 1 ns window for the fit, with 1 ns lag. This corresponds to 500000 samples of the Z-position per fit. The script auto_covar.py loads in a prod_dist.dat file, takes the window sample size (500000) and time-step between samples (0.002 ps) plus the option to skip every nth sample. With the -v option you can chose to write out the autocovariance curves (0 off / 1 on). The script then calculates the autocovariance curve per 1 ns window (using 1 ns lag), fits the log of the autocovariance to obtain tau(Z) which is then coverted to the D(Z) value with the above formula. The average D(Z) over all fits is reported (cm^2/s).
+We use a 1 ns window for the fit, with 1 ns lag. This corresponds to 50000 samples of the Z-position per fit. The script auto_covar.py loads in a prod_dist.dat file, takes the window sample size (50000) and time-step between samples (0.02 ps) plus the option to skip every nth sample. With the -v option you can chose to write out the autocovariance curves (0 off / 1 on). The script then calculates the autocovariance curve per 1 ns window (using 1 ns lag), fits the log of the autocovariance to obtain tau(Z) which is then coverted to the D(Z) value with the above formula. The average D(Z) over all fits is reported (cm^2/s).
 
-Since we have 30 ns of data with 1 ns window, there are a total of 29 fits. You can view each autocovariance curve using the -v 1 option to print these out. An example plot is shown below for the z=32 A window.
->./auto_covar.py -i prod_dist.dat -w 500000 -t 0.002 -skip 0 -v 1  
+Since we have 5 ns of data with 1 ns window, there are a total of 4 fits. You can view each autocovariance curve using the -v 1 option to print these out. An example plot is shown below for the z=32 A window.
+>./auto_covar.py -i prod_dist.dat -w 50000 -t 0.02 -skip 0 -v 1  
 >xmgrace corr.0.dat
 
 ![Alt text](/figures/autocov_32.0.png?raw=true "Autocovariance plot")
 
-*... you may want to kill the auto_covar.py script with CTRL+C as it is very slow when using all samples.*
-
-If you try auto_covar.py using -skip 0 you will notice it is extremely slow. In reality we only need every 10-100 samples. Try using every 10 or every 100 yourself and compare results:
->./auto_covar.py -i prod_dist.dat -w 500000 -t 0.002 -skip 100 -v 0
+If you try auto_covar.py using -skip 0 you will notice it is quite slow (and will get slower the longer the window simulation time is). In reality we only need every 10 or so samples. Try using every 10 yourself and compare results:
+>./auto_covar.py -i prod_dist.dat -w 50000 -t 0.02 -skip 10 -v 0
 
 To obtain diffusion values for every window, you can use the script get_diffusion.sh. Again, you may need to correct the file paths.
 >./get_diffusion > all_diffusion_values.out   
@@ -276,11 +279,11 @@ Once we have done that calculation we integrate over each R(z) value to get an e
 
 I would urge you to do such calculations using a spreadsheet, so that you understand each step. A corresponding spreadsheet is enclosed.
 
-A script to perform each step is also enclosed, called parse_fe_diff.py. This reads in the free energy profile, the diffusion profile and takes the z-limits plus step (i.e. 0->32 A, 1 A step) and the simulation temperature then calculates the resistance and does the integration.  
+A script to perform each step is also enclosed, called parse_fe_diff.py. This reads in the free energy profile, the diffusion profile and takes the z-limits plus step (i.e. 0->32 A, 2 A step) and the simulation temperature then calculates the resistance and does the integration.  
 
 >Directory: **./windows/wham_run/overall_perm**  
 
->./parse_fe_diff.py -fe ../plot.dat -diff ../diffusion/all_diffusion_values.out -start 0 -end 32 -space 1 -temp 303  
+>./parse_fe_diff.py -fe ../plot.dat -diff ../diffusion/all_diffusion_values.out -start 0 -end 32 -space 2 -temp 303  
 
 This will output the free energy curve (free_energy_profile.parse.dat), the diffusion curve (diffusion_profile.parse.dat) and the resistance profile (resistance_profile.parse.dat) plus the overall permeability coefficient.
 
@@ -295,9 +298,23 @@ Finally, we have only done the calculations for a single monolayer (water phase 
 >cat ../../diffusion/all_diffusion_values.out tmp > full_diffusion.dat  
 >rm tmp  
 
->./parse_fe_diff.py -fe full_fe.dat -diff full_diffusion.dat -start -32 -end 32 -space 1 -temp 303  
+>./parse_fe_diff.py -fe full_fe.dat -diff full_diffusion.dat -start -32 -end 32 -space 2 -temp 303  
 
 Will output the result for the full bilayer.  
+
+The resulting free energy profile:  
+
+![Alt text](/windows/wham_run/overall_perm/full_profile_perm/free_energy.png?raw=true "PMF plot")  
+
+The diffusion profile:  
+
+![Alt text](/windows/wham_run/overall_perm/full_profile_perm/diffusion.png?raw=true "Diffusion plot")  
+
+The resistance profile:  
+
+![Alt text](/windows/wham_run/overall_perm/full_profile_perm/diffusion.png?raw=true "Resistance plot")  
+
+**Corresponding profiles from 30ns windows:**  
 
 The resulting free energy profile:  
 
