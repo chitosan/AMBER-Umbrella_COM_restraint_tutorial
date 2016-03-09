@@ -327,7 +327,8 @@ P(eff): **0.18 ± 0.2 cm/s**
 **Note on windows with negative z-value**  
 The COM code is set up to also restrain molecules at a negative position along the z-axis, however there are some subtleties that may catch you out. If your starting z-position is below zero, the molecule will be held at the negative of the r2 value in the .RST file (whether the r2 setting is positive OR negative) - i.e. treat r2 as an absolute value, if the starting z-position is negative, the molecule will be restrained at the negative of this absolute value. Furthermore, the Rcurr value printed in the output file is always an absolute value. You can check the actual separation between the bilayer and drug center-of-mass either in the dist.dat file printed out, or using cpptraj. You may need to do some testing to to run windows with negative z-position.  
 
-Finally, there have been a number of articles addressing the issue of obtaining converged PMF profiles which you should take note of. Try to extend window simulation time and perform as many independent repeats from different initial coordinates and velocities to be sure your profiles are converged.
+**Convergence**  
+Finally, there have been a number of articles addressing the issue of obtaining converged PMF profiles which you should take note of. Try to extend window simulation time and perform as many independent repeats from different initial coordinates and velocities to be sure your profiles are converged. Also, check from the histograms that your windows have suitable overlap.  
 
 A few papers you may want to read on the issues of convergence are linked below:
 
