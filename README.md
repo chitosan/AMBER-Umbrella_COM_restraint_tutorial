@@ -262,7 +262,7 @@ Since we have 5 ns of data with 1 ns window, there are a total of 4 fits. You ca
 If you try auto_covar.py using -skip 0 you will notice it is quite slow (and will get slower the longer the window simulation time is). In reality we only need every 10 or so samples. Try using every 10 yourself and compare results:
 >./auto_covar.py -i prod_dist.dat -w 50000 -t 0.02 -skip 10 -v 0
 
-*If you change istep=1, remember to use -t 0.002.*
+*If you change write frequency to istep=1, remember to use -t 0.002.*
 
 To obtain diffusion values for every window, you can use the script get_diffusion.sh. Again, you may need to correct the file paths.
 >./get_diffusion > all_diffusion_values.out   
