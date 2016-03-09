@@ -108,7 +108,7 @@ Change DISTHERE to 0.0 in COM_dist.RST.
 
 We also need a file for the pulling step COM_pull.RST. This is similar to COM_dist.RST but specifies a starting positon of 0 and a final position of 32, the force constant for pulling is also reduced to 1.1.
 
-We now have the .RST files for equilibration (methanol is held at z=0) and for the pulling (methanol is moved from z=0 to z=32A).
+We now have the .RST files for equilibration (methanol is held at z=0) and for the pulling (methanol is moved from z=0 to z=32 A).
 
 The inputs and run script are provided. Please also examine the input files, importantly:
 >&wt type='DUMPFREQ', istep1=1000 /  *print position of restrained molecule every 1000 steps*  
@@ -116,10 +116,10 @@ The inputs and run script are provided. Please also examine the input files, imp
 >DISANG=COM_dist.RST *details of the COM restraint*  
 >DUMPAVE=04_Equil_dist.RST *file to write position of restrained molecule to*  
 
-You can then run both the equilibration (heat, hold methanol at z=0 for 100ps) and the pulling (move methanol from z=0 to z=32A  over 32ns of simulation) with the following bash script:
+You can then run both the equilibration (heat, hold methanol at z=0 for 100ps) and the pulling (move methanol from z=0 to z=32 A  over 32 ns of simulation) with the following bash script:
 >./run_pull.sh
 
-Note that the pulling rate is implicitely set by the total pull distance (32A, as set in COM_pull.RST) and the total simulation time (32ns, as set in 05_Pull.in). The pulling rate here is then 1A per ns.
+Note that the pulling rate is implicitely set by the total pull distance (32A, as set in COM_pull.RST) and the total simulation time (32 ns, as set in 05_Pull.in). The pulling rate here is then 1A per ns.
 
 You will have to modify GPU / AMBERHOME specific information, or make it suitable for your cluster. This took 12 hours on a single GPU. However you can skip to the next step without doing the actual run, as the starting windows we extract from the the resulting trajectory are provided.   
 
@@ -128,7 +128,7 @@ You can check the pulling step has worked by plotting the z-position:
 
 ![Alt text](/figures/moh_pull.png?raw=true "Pulling: distance vs time")
 
-We can now extract windows with 2A spacing along the z-axis and run windows from each.
+We can now extract windows with 2 A spacing along the z-axis and run windows from each.
 
 All outputs from the simulation have been moved into "./md_output" (minus the trajectory files).
 
@@ -153,13 +153,13 @@ This should output two files: the imaged trajectory from which we extract the sn
 We can extract the window starting points using extract_window.py:
 >./extract_window.py -i bilayer_zero.nc -p DMPC_MOH.prmtop -d c0.out -start 0 -end 32 -space 2
 
-This will output frames with the methanol at 0, 2, 4, ..., 32A from the bilayer center-of-mass. These restarts are provided.
+This will output frames with the methanol at 0, 2, 4, ..., 32 A from the bilayer center-of-mass. These restarts are provided.
 
 Now we can run each window for 5ns using the 06_Prod.in input and run_window_cuda.sh bash run script.  
 
 **Important:** You should run this using a COM_dist.RST file which is a copy of ref_COM_file.RST (i.e. it contains DISTHERE which gets substituted for the correct distance for each window).
 
-**Sampling:** For the purposes of the tutorial, the windows are separated by 2A, with each window being run to 5ns and the z-position being written every 10th step (istep=10). However to obtain a better converged profile, I recommend 1A spacing, 30ns run time (at a minimum, ideally 100ns or more) and istep=1. We will constrast results from 5ns versus 30ns run time later.
+**Sampling:** For the purposes of the tutorial, the windows are separated by 2 A, with each window being run to 5 ns and the z-position being written every 10th step (istep=10). However to obtain a better converged profile, I recommend 1 A spacing, 30 ns run time (at a minimum, ideally 100 ns or more) and istep=1. We will constrast results from 5 ns versus 30 ns run time later.
 
 >./run_window_cuda.sh
 
@@ -209,7 +209,7 @@ You can then extract just the PMF curve and plot like so:
 You should obtain a plot similar to this:
 ![Alt text](/windows/wham_run/plot_free_energy.png?raw=true "PMF plot")
 
-You will notice how shaky (unconverged) the profile is, below is the result for 30ns windows with 1A spacing and istep=1.
+You will notice how shaky (unconverged) the profile is, below is the result for 30 ns windows with 1 A spacing and istep=1.
 ![Alt text](/figures/plot_free_energy_320.png?raw=true "PMF plot")
 
 To examine how well the overlap is between each window, we can create a histogram of the drug z-position.
@@ -224,12 +224,12 @@ You should get something like this:
 >xmgrace hist*dat  
 ![Alt text](/windows/wham_run/hist_plot/hist_plot.png?raw=true "PMF plot")
 
-Again, you will notice the poor overlap of the windows. Below is the result for 30ns.
+Again, you will notice the poor overlap of the windows. Below is the result for 30 ns.
 ![Alt text](/figures/hist_plot.png?raw=true "Histograms")
 
-We see that the overlap is suitable when using 30ns windows, 1A separation and 2.5 kcal/mol/A^2 force constant.
+We see that the overlap is suitable when using 30 ns windows, 1 A separation and 2.5 kcal/mol/A^2 force constant.
 
-**Important:** The limits 0-> 32A and bin number 160 are hard-coded into generate_hist.py, you will need to change this for windows at positions along the z-axis outside of these limits in your own simulations.  
+**Important:** The limits 0-> 32 A and bin number 160 are hard-coded into generate_hist.py, you will need to change this for windows at positions along the z-axis outside of these limits in your own simulations.  
 
 #Step 6: Diffusion, resistance and overall permeability
 The final step computes first the diffusion along the z-axis, combines the result with the free energy profile data to obtain the resistance along the z-axis and finally integrates the resistance at each z-window to obtain an overall permeability coefficient estimate.
@@ -261,6 +261,8 @@ Since we have 5 ns of data with 1 ns window, there are a total of 4 fits. You ca
 
 If you try auto_covar.py using -skip 0 you will notice it is quite slow (and will get slower the longer the window simulation time is). In reality we only need every 10 or so samples. Try using every 10 yourself and compare results:
 >./auto_covar.py -i prod_dist.dat -w 50000 -t 0.02 -skip 10 -v 0
+
+*If you change istep=1, remember to use -t 0.002.
 
 To obtain diffusion values for every window, you can use the script get_diffusion.sh. Again, you may need to correct the file paths.
 >./get_diffusion > all_diffusion_values.out   
@@ -314,7 +316,7 @@ The resistance profile:
 
 ![Alt text](/windows/wham_run/overall_perm/full_profile_perm/resistance.png?raw=true "Resistance plot")  
 
-**Corresponding profiles from 30ns windows:**  
+**Corresponding profiles from 30 ns windows:**  
 
 The resulting free energy profile:  
 
@@ -335,7 +337,7 @@ P(eff): **0.132 cm/s**
 
 The values I obtain using 30 ns windows are:
 
-G(pen): **3.27 kcal/mol** (free energy at the center z=0)  
+G(pen): **3.27 kcal/mol**
 P(eff): **0.159 cm/s**
 
 Your values should be somewhere in this ballpark.
