@@ -312,7 +312,7 @@ The diffusion profile:
 
 The resistance profile:  
 
-![Alt text](/windows/wham_run/overall_perm/full_profile_perm/diffusion.png?raw=true "Resistance plot")  
+![Alt text](/windows/wham_run/overall_perm/full_profile_perm/resistance.png?raw=true "Resistance plot")  
 
 **Corresponding profiles from 30ns windows:**  
 
