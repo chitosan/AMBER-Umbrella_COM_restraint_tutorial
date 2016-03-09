@@ -9,7 +9,7 @@
    ntb=2, cut=10.0, ioutfm=1, ntxo=2,
    nmropt=1, ntp=3, csurften=3, gamma_ten=0.0, ninterface=2,
  /
- &wt type='DUMPFREQ', istep1=1 /
+ &wt type='DUMPFREQ', istep1=1000 /
  &wt type='END', /
 DISANG=COM_dist.RST
 DUMPAVE=06_Prod_dist.dat
