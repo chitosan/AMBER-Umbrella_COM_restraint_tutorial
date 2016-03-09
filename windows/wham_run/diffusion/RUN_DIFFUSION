@@ -1,0 +1,4 @@
+Check file paths in get_diffusion.sh.
+
+Then:
+./get_diffusion.sh > all_diffusion_values.out
