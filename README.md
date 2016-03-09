@@ -123,9 +123,9 @@ You can then run both the equilibration (heat, hold methanol at z=0 for 100ps) a
 
 Note that the pulling rate is implicitely set by the total pull distance (32A, as set in COM_pull.RST) and the total simulation time (32ns, as set in 05_Pull.in). The pulling rate here is then 1A per ns.
 
-You will have to modify GPU / AMBERHOME specific information, or make it suitable for your cluster. This took 12 hours on a single GPU. However you can skip to the next step without doing the actual run, as the starting windows we extract from the the resulting trajectory are provided.
+You will have to modify GPU / AMBERHOME specific information, or make it suitable for your cluster. This took 12 hours on a single GPU. However you can skip to the next step without doing the actual run, as the starting windows we extract from the the resulting trajectory are provided.   
 
-Due to file sizes, the trajectories are not provided here. You can check the pulling step has worked by plotting the z-position:
+You can check the pulling step has worked by plotting the z-position:
 >xmgrace 05_Pull_dist.dat
 
 ![Alt text](/figures/moh_pull.png?raw=true "Pulling: distance vs time")
