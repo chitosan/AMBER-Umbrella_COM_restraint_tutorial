@@ -332,20 +332,20 @@ The resistance profile:
 
 The values using 5 ns windows are:  
 
-G(pen): **3.06 kcal/mol** (free energy at the center z=0)  
-P(eff): **0.132 cm/s**  
+* G(pen): **3.06 kcal/mol** (free energy at the center z=0)  
+* P(eff): **0.132 cm/s**  
 
 The values I obtain using 30 ns windows are:
 
-G(pen): **3.27 kcal/mol**
-P(eff): **0.159 cm/s**
+* G(pen): **3.27 kcal/mol**  
+* P(eff): **0.159 cm/s**
 
 Your values should be somewhere in this ballpark.
 
 These compare favourably with those obtained by Orsi *et al* (also linked at the top of this tutorial): http://pubs.acs.org/doi/abs/10.1021/jp903248s
 
-G(pen): **~3.3 kcal/mol**  
-P(eff): **0.18 ± 0.2 cm/s**
+* G(pen): **~3.3 kcal/mol**  
+* P(eff): **0.18 ± 0.2 cm/s**
 
 **Note on windows with negative z-value**  
 The COM code is set up to also restrain molecules at a negative position along the z-axis, however there are some subtleties that may catch you out. If your starting z-position is below zero, the molecule will be held at the negative of the r2 value in the .RST file (whether the r2 setting is positive OR negative) - i.e. treat r2 as an absolute value, if the starting z-position is negative, the molecule will be restrained at the negative of this absolute value. Furthermore, the Rcurr value printed in the output file is always an absolute value. You can check the actual separation between the bilayer and drug center-of-mass either in the dist.dat file printed out, or using cpptraj. You may need to do some testing to to run windows with negative z-position.  
