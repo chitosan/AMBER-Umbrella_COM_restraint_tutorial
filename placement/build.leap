@@ -2,7 +2,9 @@ source leaprc.ff12SB
 source leaprc.gaff
 source leaprc.lipid16
 loadoff ../parameters/MOH.off
-mol = loadpdb DMPC_MOH.pdb
+drug = loadpdb moh_center.pdb  
+bilayer = loadpdb DMPC_72_relax.pdb  
+mol = combine { drug bilayer }
 set mol box {48.158000946044922 47.37200164794922 77.938003540039064}
 saveamberparm mol DMPC_MOH.prmtop DMPC_MOH.inpcrd
 quit
