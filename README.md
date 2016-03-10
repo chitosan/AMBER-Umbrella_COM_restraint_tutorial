@@ -10,7 +10,9 @@ Tutorial to run the AMBER umbrella COM restraint code and derive the free energy
 * WHAM (http://membrane.urmc.rochester.edu/content/wham)
 
 # Files
-You can download this tutorial from github, the resulting zip file will not have any trajectories from the MD simulations described below due to file size limits. You will have to give the scripts executable permissions with chmod.
+You can download this tutorial from github, the resulting zip file will not have any trajectories from the MD simulations described below due to file size limits. You may have to give the scripts executable permissions with chmod. Or runs scripts as:
+* bash bash_script.sh  
+* python python_script.py  
 
 # Introduction
 This tutorial uses the AMBER16 center-of-mass (COM) umbrella restraint code to determine the free energy of transfer profile for a methanol molecule through a DMPC membrane bilayer. The methanol molecule is first pulled from the center of the membrane out into the water phase. From the pulling step, we extract starting positions with methanol at 0, 2, 4, ..., 32 A from the membrane center. We run windows with methanol restrained at each of these positions. From the fluctuation in the z-position, we can construct the free energy profile using WHAM. Finally, we use the same information to derive the z-diffusion and z-resistance profiles and an estimate of the overall permeability coefficient.
