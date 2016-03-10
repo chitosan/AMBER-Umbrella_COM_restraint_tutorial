@@ -66,9 +66,9 @@ Using the output we can build the system with build.leap file shown below:
 >loadoff ../parameters/MOH.off  
 >drug = loadpdb moh_center.pdb  
 >bilayer = loadpdb DMPC_72_relax.pdb  
->system = combine {drug bilayer}  
->set system box {48.158 47.372 77.938}  
->saveamberparm system DMPC_MOH.prmtop DMPC_MOH.inpcrd  
+>mol = combine {drug bilayer}  
+>set mol box {48.158 47.372 77.938}  
+>saveamberparm mol DMPC_MOH.prmtop DMPC_MOH.inpcrd  
 >quit  
 
 Now run tleap:
