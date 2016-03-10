@@ -5,7 +5,7 @@ export CUDA_VISIBLE_DEVICES="0"
 export prmtop=../DMPC_MOH.prmtop
 export name=DMPC_MOH
 
-for i in $(seq 32.0 -1.0 0.0)
+for i in $(seq 32.0 -2.0 0.0)
 do
 
 mkdir dist_${i}
