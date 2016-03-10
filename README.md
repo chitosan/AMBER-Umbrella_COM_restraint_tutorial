@@ -63,7 +63,7 @@ Using the output we can build the system with build.leap file shown below:
 >source leaprc.ff14SB  
 >source leaprc.gaff  
 >source leaprc.lipid16  
->loadoff MOH.off  
+>loadoff ../parameters/MOH.off  
 >drug = loadpdb moh_center.pdb  
 >bilayer = loadpdb DMPC_72_relax.pdb  
 >system = combine {drug bilayer}  
