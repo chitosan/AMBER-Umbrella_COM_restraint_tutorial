@@ -1,4 +1,4 @@
-trajin ../pulling/md_output/05_Pull_DMPC_MOH.nc 
+trajin ../pulling/md_output/05_Pull_DMPC_MOH_reduce.nc 
 center mass origin :2-217@N31
 image center origin familiar
 vector c0 :1 :1 out c0.out
