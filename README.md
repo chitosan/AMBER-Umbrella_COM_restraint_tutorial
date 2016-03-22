@@ -141,7 +141,7 @@ First we need to extract starting points for each window run from the pulling tr
 **Important:** We must create an imaged trajectory to extract these windows from in which the bilayer center-of-mass, as defined by N31 head group atoms, is imaged to the origin (0,0,0). This means that when we extract the position of the methanol molecule, we also know that this is the separation between the bilayer COM and the methanol too.
 
 Run cpptraj with image.trajin file:
->trajin 05_Pull_DMPC_MOH.nc  
+>trajin ../pulling/md_output/05_Pull_DMPC_MOH_reduce.nc   
 >center mass origin :2-217@N31  
 >image center origin familiar  
 >vector c0 :1 :1 out c0.out  
