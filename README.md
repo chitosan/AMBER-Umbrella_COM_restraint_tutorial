@@ -147,6 +147,8 @@ Run cpptraj with image.trajin file:
 >vector c0 :1 :1 out c0.out  
 >trajout bilayer_zero.nc netcdf  
 
+*Note: the 05_Pull_DMPC_MOH_reduce.nc trajectory included here from the pulling step is much reduced from the original output to keep within file size limits - it contains only 33 frames allowing the window extraction for the purposes of this tutorial. If you run the full pulling step of 32 ns you should obtain a trajectory with 16000 frames.*
+
 Then:
 >cpptraj DMPC_MOH.prmtop < image.trajin
 
