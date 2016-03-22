@@ -1,0 +1,7 @@
+HETATM    1  C   MOH     1      -0.086  -0.219  -0.117
+HETATM    2  O1  MOH     1       1.342  -0.219  -0.117
+HETATM    3  H1  MOH     1       1.632  -0.456   0.767
+HETATM    4  H2  MOH     1      -0.449   0.508   0.610
+HETATM    5  H3  MOH     1      -0.449  -1.212   0.149
+HETATM    6  H4  MOH     1      -0.449   0.047  -1.110
+TER
