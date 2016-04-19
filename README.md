@@ -235,6 +235,9 @@ We see that the overlap is suitable when using 30 ns windows, 1 A separation and
 
 **Important:** The limits 0-> 32 A and bin number 160 are hard-coded into generate_hist.py, you will need to change this for windows at positions along the z-axis outside of these limits in your own simulations.  
 
+.. ..
+
+<!---
 #Step 6: Diffusion, resistance and overall permeability
 The final step computes first the diffusion along the z-axis, combines the result with the free energy profile data to obtain the resistance along the z-axis and finally integrates the resistance at each z-window to obtain an overall permeability coefficient estimate.
 
@@ -351,6 +354,8 @@ These compare favourably with those obtained by Orsi *et al* (also linked at the
 * G(pen): **~3.3 kcal/mol**  
 * P(eff): **0.18 ± 0.2 cm/s**
 
+--->
+ 
 **Note on windows with negative z-value**  
 The COM code is set up to also restrain molecules at a negative position along the z-axis, however there are some subtleties that may catch you out. If your starting z-position is below zero, the molecule will be held at the negative of the r2 value in the .RST file (whether the r2 setting is positive OR negative) - i.e. treat r2 as an absolute value, if the starting z-position is negative, the molecule will be restrained at the negative of this absolute value. Furthermore, the Rcurr value printed in the output file is always an absolute value. You can check the actual separation between the bilayer and drug center-of-mass either in the dist.dat file printed out, or using cpptraj. You may need to do some testing to to run windows with negative z-position.  
 
