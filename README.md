@@ -23,7 +23,9 @@ There is a great deal of literature available on running z-restraint simulations
 
 * Orsi *et al*: http://pubs.acs.org/doi/abs/10.1021/jp903248s
 
-* Carpenter *et al*: http://dx.doi.org/10.1016/j.bpj.2014.06.024
+* Carpenter *et al*: http://dx.doi.org/10.1016/j.bpj.2014.06.024  
+
+* Lee *et al*: http://pubs.acs.org/doi/full/10.1021/acs.jcim.6b00022  
 
 # Step 1: Parameters
 First we need a starting membrane bilayer PDB file and the coordinates and parameters for methanol.  
@@ -235,9 +237,6 @@ We see that the overlap is suitable when using 30 ns windows, 1 A separation and
 
 **Important:** The limits 0-> 32 A and bin number 160 are hard-coded into generate_hist.py, you will need to change this for windows at positions along the z-axis outside of these limits in your own simulations.  
 
-.. ..
-
-<!---
 #Step 6: Diffusion, resistance and overall permeability
 The final step computes first the diffusion along the z-axis, combines the result with the free energy profile data to obtain the resistance along the z-axis and finally integrates the resistance at each z-window to obtain an overall permeability coefficient estimate.
 
@@ -246,11 +245,16 @@ The final step computes first the diffusion along the z-axis, combines the resul
 For details on the position-dependent diffusion and resistance calculations please see the following publication from Gerhard Hummer:
 http://iopscience.iop.org/article/10.1088/1367-2630/7/1/034/meta
 
-The following methods is based on that used by Carpenter *et al* (also linked at the top of this tutorial): http://dx.doi.org/10.1016/j.bpj.2014.06.024
+The following methods is based on that used by Lee *et al* (also linked at the top of this tutorial): 
+http://pubs.acs.org/doi/full/10.1021/acs.jcim.6b00022  
 
 The position-dependent diffusion is calculated as:  
 
-![equation](http://ars.els-cdn.com/content/image/1-s2.0-S000634951400664X-si2.gif)
+![equation](http://pubs.acs.org/appl/literatum/publisher/achs/journals/content/jcisd8/0/jcisd8.ahead-of-print/acs.jcim.6b00022/20160414/images/ci-2016-00022q_m004.gif)
+
+Where
+
+![equation](http://pubs.acs.org/appl/literatum/publisher/achs/journals/content/jcisd8/0/jcisd8.ahead-of-print/acs.jcim.6b00022/20160414/images/ci-2016-00022q_m005.gif)
 
 With 〈Z〉 the average of the reaction coordinate Z, var(Z) the variance of the drug position (the auto-covariance at lag zero) and tau(Z) the characteristic time of the decay of the autocovariance of the drug position Z.
 
