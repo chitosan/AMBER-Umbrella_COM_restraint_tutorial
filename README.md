@@ -256,29 +256,42 @@ Where
 
 ![equation](http://pubs.acs.org/appl/literatum/publisher/achs/journals/content/jcisd8/0/jcisd8.ahead-of-print/acs.jcim.6b00022/20160414/images/ci-2016-00022q_m005.gif)
 
-With 〈Z〉 the average of the reaction coordinate Z, var(Z) the variance of the drug position (the auto-covariance at lag zero) and tau(Z) the characteristic time of the decay of the autocovariance of the drug position Z.
+For each window, we must calculate the autocorrelation function of the Z-position from the restraint simulation then integrate the result up until it has decayed to zero. The position-dependent diffusion value D(Z) is then the variance in Z squared (i.e. the first value in the autocorrelation function squared) divided by the resulting integral. Here, we calculate the ACF and from it a D(Z) estimate using 1 ns periods. Given that we ran each window for 5 ns, we then have five estimates for D(Z) per window and can take an average over these.
 
-We calculate the autocovarince of the Z-position with increasing lag-time and perform a least-squares-fit to the log of the resulting decay curve to obtain tau(Z). This process is repeated over separate slices of the full trajectory to obtain an average tau(Z) value per window.
+The article from Lee *et al* has a thorough discussion on calculating position-dependent diffusion values (and inherent issues involved) so is advised reading.
 
-If you ran 06_Prod.in for 5ns, with istep1=10, then the final output distance file will have 250000 entries (i.e. a Z-position for every 0.02 ps).
+If you ran 06_Prod.in for 5 ns, with istep1=10, then the final output distance file will have 250000 entries (i.e. a Z-position for every 0.02 ps). So we have 50000 samples per ns.
 
-We use a 1 ns window for the fit, with 1 ns lag. This corresponds to 50000 samples of the Z-position per fit. The script auto_covar.py loads in a prod_dist.dat file, takes the window sample size (50000) and time-step between samples (0.02 ps) plus the option to skip every nth sample. With the -v option you can chose to write out the autocovariance curves (0 off / 1 on). The script then calculates the autocovariance curve per 1 ns window (using 1 ns lag), fits the log of the autocovariance to obtain tau(Z) which is then coverted to the D(Z) value with the above formula. The average D(Z) over all fits is reported (cm^2/s).
+The script ACF_parse.cpp is adapted from the Rowley Lab (also included in the SI of the Lee paper):
+https://github.com/RowleyGroup/ACFCalculator
 
-Since we have 5 ns of data with 1 ns window, there are a total of 4 fits. You can view each autocovariance curve using the -v 1 option to print these out. An example plot is shown below for the z=32 A window.
->./auto_covar.py -i prod_dist.dat -w 50000 -t 0.02 -skip 0 -v 1  
->xmgrace corr.0.dat
+It has been adapted to work with outputs from the AMBER umbrella z-restraint COM  code. To calculate the ACF from a 1 ns sample you can run it as follows:
+> Compile:  
+> g++ ACF_parse.cpp -o ACF_calc.x
+>  
+> Run:  
+> ./ACF_calc.x -f prod_1ns.dat -s 50000 -n 50000 -d 0.02 -o acf_plot.dat  
+
+Where:
+* -f denotes the input file, which has two columns, the time (left) and the Z-position (right)
+* -s is the number of samples
+* -n is the number of samples over which to calculate the ACF for
+* -d is the time between samples in ps (here 0.02 ps)
+* -o denotes the output file to which to write the ACF
+* -c is an optional flag, which cuts off calculation of the integral after the ACF has dropped to c*variance (e.g. 0.01-0.05)
+
+
 
 ![Alt text](/figures/autocov_32.0.png?raw=true "Autocovariance plot")
 
-If you try auto_covar.py using -skip 0 you will notice it is quite slow (and will get slower the longer the window simulation time is). In reality we only need every 10 or so samples. Try using every 10 yourself and compare results:
->./auto_covar.py -i prod_dist.dat -w 50000 -t 0.02 -skip 10 -v 0
+
 
 *If you change write frequency to istep=1, remember to use -t 0.002.*
 
 To obtain diffusion values for every window, you can use the script get_diffusion.sh. Again, you may need to correct the file paths.
 >./get_diffusion > all_diffusion_values.out   
 
-**Note:** For windows near z=0, fitting of the autocovariance curves can be problematic. If a tau(Z) value is unrealistically large (above a threshold) this fit is rejected. You may obtain fewer corr.dat files at windows near the bilayer center.
+
 
 Now that we have the Z-dependent diffusion values D(Z), we can combine these with the value of the free energy at each Z-position to get the local resistance value R(Z) as:  
 
