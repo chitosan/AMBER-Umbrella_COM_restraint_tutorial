@@ -269,29 +269,37 @@ It has been adapted to work with outputs from the AMBER umbrella z-restraint COM
 > Compile:  
 > g++ ACF_parse.cpp -o ACF_calc.x
 >  
-> Run:  
-> ./ACF_calc.x -f prod_1ns.dat -s 50000 -n 50000 -d 0.02 -o acf_plot.dat  
+> Run for the z=32.0 window:  
+> ./ACF_calc.x -f ../../md_output/dist_32.0/prod_dist.dat -s 50000 -n 50000 -d 0.02 -o acf_plot.dat  
 
 Where:
 * -f denotes the input file, which has two columns, the time (left) and the Z-position (right)
-* -s is the number of samples
-* -n is the number of samples over which to calculate the ACF for
-* -d is the time between samples in ps (here 0.02 ps)
+* -s is the number of samples (numSamples)
+* -n is the number of samples over which to calculate the ACF for (nCorr)
+* -d is the timestep dt between samples in ps (here 0.02 ps)
 * -o denotes the output file to which to write the ACF
 * -c is an optional flag, which cuts off calculation of the integral after the ACF has dropped to c*variance (e.g. 0.01-0.05)
 
+If you take a 1 ns sample from the z=32 A window and calculate the ACF and plot the resulting output file, you will see that it quickly decays to zero (within 5 ps), after which it oscillates around zero with a lot of noise. This noise affects the integral - instead, we only integrate up to the point that the ACF has decayed to 0.01 of its initial value using the -c flag:
+>./ACF_calc.x -f ../../md_output/dist_32.0/prod_dist.dat -s 50000 -n 50000 -d 0.02 -c 0.01 -o acf_plot.dat  
 
+You should obtain a value for the overall diffusion coefficient of about 3.26e-5 cm/s.  
 
-![Alt text](/figures/autocov_32.0.png?raw=true "Autocovariance plot")
+If you now do the same using a sample from z=0 A, you will see that although the ACF decays quickly, it bounces back up with a much more slowly decaying tail. These means that our method of only integrating up until 0.01*variance is no longer applicable. We instead need to integrate up until about 50 ps, given that the ACF decays roughly to zero by this time (50/0.02=2500, so we use 2500 samples):
+>./ACF_calc.x -f ../../md_output/dist_0.0/prod_dist.dat -s 50000 -n 2500 -d 0.02 -c 0.01 -o acf_plot.dat  
 
+![Alt text](/figures/autocov_32.0.png?raw=true "Autocorrelation plots")
 
+For methanol at least, the transition between using the cut-off method to using 50 ps occurs at z=8 A.
 
-*If you change write frequency to istep=1, remember to use -t 0.002.*
+You can use the following scripts to automate these calculations, please examine each so you know what they are doing and check that file paths are correct:
 
-To obtain diffusion values for every window, you can use the script get_diffusion.sh. Again, you may need to correct the file paths.
->./get_diffusion > all_diffusion_values.out   
+> First:  
+>./get_cut_int_diffusion.sh >> all_diffusion_values.out
+> Then:  
+>./get_nCorr_diffusion.sh >> all_diffusion_values.out
 
-
+*If you change write frequency to istep=1, remember to set -d 0.002 and increase numSamples etc appropriately.*
 
 Now that we have the Z-dependent diffusion values D(Z), we can combine these with the value of the free energy at each Z-position to get the local resistance value R(Z) as:  
 
@@ -357,12 +365,12 @@ The resistance profile:
 The values using 5 ns windows are:  
 
 * G(pen): **3.06 kcal/mol** (free energy at the center z=0)  
-* P(eff): **0.132 cm/s**  
+* P(eff): **0.263 cm/s**  
 
 The values I obtain using 30 ns windows are:
 
 * G(pen): **3.27 kcal/mol**  
-* P(eff): **0.159 cm/s**
+* P(eff): **0.277 cm/s**
 
 Your values should be somewhere in this ballpark.
 
@@ -371,8 +379,6 @@ These compare favourably with those obtained by Orsi *et al* (also linked at the
 * G(pen): **~3.3 kcal/mol**  
 * P(eff): **0.18 ± 0.2 cm/s**
 
---->
- 
 **Note on windows with negative z-value**  
 The COM code is set up to also restrain molecules at a negative position along the z-axis, however there are some subtleties that may catch you out. If your starting z-position is below zero, the molecule will be held at the negative of the r2 value in the .RST file (whether the r2 setting is positive OR negative) - i.e. treat r2 as an absolute value, if the starting z-position is negative, the molecule will be restrained at the negative of this absolute value. Furthermore, the Rcurr value printed in the output file is always an absolute value. You can check the actual separation between the bilayer and drug center-of-mass either in the dist.dat file printed out, or using cpptraj. You may need to do some testing to to run windows with negative z-position.  
 
