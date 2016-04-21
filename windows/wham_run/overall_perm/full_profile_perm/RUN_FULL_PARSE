@@ -1,0 +1,2 @@
+./parse_fe_diff.py -fe full_fe.dat -diff full_diffusion.dat -start -32 -end 32 -space 2 -temp 303
+
