@@ -245,7 +245,7 @@ The final step computes first the diffusion along the z-axis, combines the resul
 For details on the position-dependent diffusion and resistance calculations please see the following publication from Gerhard Hummer:
 http://iopscience.iop.org/article/10.1088/1367-2630/7/1/034/meta
 
-The following methods is based on that used by Lee *et al* (also linked at the top of this tutorial): 
+The following workflow is based on that by Lee *et al* (also linked at the top of this tutorial): 
 http://pubs.acs.org/doi/full/10.1021/acs.jcim.6b00022  
 
 The position-dependent diffusion is calculated as:  
@@ -256,7 +256,7 @@ Where
 
 ![equation](http://pubs.acs.org/appl/literatum/publisher/achs/journals/content/jcisd8/0/jcisd8.ahead-of-print/acs.jcim.6b00022/20160414/images/ci-2016-00022q_m005.gif)
 
-For each window, we must calculate the autocorrelation function of the Z-position from the restraint simulation then integrate the result up until it has decayed to zero. The position-dependent diffusion value D(Z) is then the variance in Z squared (i.e. the first value in the autocorrelation function squared) divided by the resulting integral. Here, we calculate the ACF and from it a D(Z) estimate using 1 ns periods. Given that we ran each window for 5 ns, we then have five estimates for D(Z) per window and can take an average over these.
+For each window, we must calculate the autocorrelation function of the Z-position from the restraint simulation then integrate the result up until it has decayed to zero. The position-dependent diffusion value D(Z) is then the variance var(Z) squared (i.e. the first value in the autocorrelation function squared) divided by the resulting integral. Here, we calculate the ACF and from it a D(Z) estimate using 1 ns periods. Given that we ran each window for 5 ns, we then have five estimates for D(Z) per window and can take an average over these.
 
 The article from Lee *et al* has a thorough discussion on calculating position-dependent diffusion values (and inherent issues involved) so is advised reading.
 
@@ -265,7 +265,7 @@ If you ran 06_Prod.in for 5 ns, with istep1=10, then the final output distance f
 The script ACF_parse.cpp is adapted from the Rowley Lab (also included in the SI of the Lee paper):
 https://github.com/RowleyGroup/ACFCalculator
 
-It has been adapted to work with outputs from the AMBER umbrella z-restraint COM  code. To calculate the ACF from a 1 ns sample you can run it as follows:
+It has been adapted to work with outputs from the AMBER umbrella z-restraint COM code. To calculate the ACF from a 1 ns sample you can run it as follows:
 > Compile:  
 > g++ ACF_parse.cpp -o ACF_calc.x
 >  
@@ -275,7 +275,7 @@ It has been adapted to work with outputs from the AMBER umbrella z-restraint COM
 Where:
 * -f denotes the input file, which has two columns, the time (left) and the Z-position (right)
 * -s is the number of samples (numSamples)
-* -n is the number of samples over which to calculate the ACF for (nCorr)
+* -n is the number of samples over which to calculate the ACF (nCorr)
 * -d is the timestep dt between samples in ps (here 0.02 ps)
 * -o denotes the output file to which to write the ACF
 * -c is an optional flag, which cuts off calculation of the integral after the ACF has dropped to c*variance (e.g. 0.01-0.05)
@@ -285,12 +285,12 @@ If you take a 1 ns sample from the z=32 A window and calculate the ACF and plot 
 
 You should obtain a value for the overall diffusion coefficient of about 3.26e-5 cm/s.  
 
-If you now do the same using a sample from z=0 A, you will see that although the ACF decays quickly, it bounces back up with a much more slowly decaying tail. These means that our method of only integrating up until 0.01*variance is no longer applicable. We instead need to integrate up until about 50 ps, given that the ACF decays roughly to zero by this time (50/0.02=2500, so we use 2500 samples):
->./ACF_calc.x -f ../../md_output/dist_0.0/prod_dist.dat -s 50000 -n 2500 -d 0.02 -c 0.01 -o acf_plot.dat  
+If you now do the same using a sample from z=0 A, you will see that although the ACF decays quickly, it bounces back up with a much more slowly decaying tail. These means that our method of only integrating up until 0.01*variance is no longer proper. We instead need to integrate up until about 50 ps, given that the ACF decays roughly to zero by this time (50/0.02=2500, so we use 2500 samples):
+>./ACF_calc.x -f ../../md_output/dist_0.0/prod_dist.dat -s 50000 -n 2500 -d 0.02 -o acf_plot.dat  
 
 ![Alt text](/windows/wham_run/diffusion/acf_compare.png?raw=true "Autocorrelation plots")
 
-For methanol at least, the transition between using the cut-off method to using 50 ps occurs at z=8 A.
+For methanol at least, the transition between using the cut-off method to using 50 ps integration window occurs at z=8 A.
 
 You can use the following scripts to automate these calculations, please examine each so you know what they are doing and check that file paths are correct:
 
