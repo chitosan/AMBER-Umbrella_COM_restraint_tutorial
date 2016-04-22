@@ -273,7 +273,7 @@ It has been adapted to work with outputs from the AMBER umbrella z-restraint COM
 > ./ACF_calc.x -f ../../md_output/dist_32.0/prod_dist.dat -s 50000 -n 50000 -d 0.02 -o acf_plot.dat  
 
 Where:
-* -f denotes the input file, which has two columns, the time (left) and the Z-position (right)
+* -f denotes the input file, which has two columns, the time (column 1) and the Z-position (column 2)
 * -s is the number of samples (numSamples)
 * -n is the number of samples over which to calculate the ACF (nCorr)
 * -d is the timestep dt between samples in ps (here 0.02 ps)
