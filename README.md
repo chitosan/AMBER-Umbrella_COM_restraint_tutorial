@@ -283,9 +283,9 @@ Where:
 If you take a 1 ns sample from the z=32 A window and calculate the ACF and plot the resulting output file, you will see that it quickly decays to zero (within 5 ps), after which it oscillates around zero with a lot of noise. This noise affects the integral - instead, we only integrate up to the point that the ACF has decayed to 0.01 of its initial value using the -c flag:
 >./ACF_calc.x -f ../../md_output/dist_32.0/prod_dist.dat -s 50000 -n 50000 -d 0.02 -c 0.01 -o acf_plot.dat  
 
-You should obtain a value for the overall diffusion coefficient of about 3.26e-5 cm/s.  
+You should obtain a value for the overall diffusion coefficient of about 3.26e-5 cm^2/s.  
 
-If you now do the same using a sample from z=0 A, you will see that although the ACF decays quickly, it bounces back up with a much more slowly decaying tail. These means that our method of only integrating up until 0.01*variance is no longer proper. We instead need to integrate up until about 50 ps, given that the ACF decays roughly to zero by this time (50/0.02=2500, so we use 2500 samples):
+If you now do the same using a sample from z=0 A, you will see that although the ACF decays quickly, it bounces back up with a much more slowly decaying tail. These means that our method of only integrating up until 0.01*variance is no longer acceptable. We instead need to integrate up until about 50 ps, given that the ACF decays roughly to zero by this time (50/0.02=2500, so we use 2500 samples):
 >./ACF_calc.x -f ../../md_output/dist_0.0/prod_dist.dat -s 50000 -n 2500 -d 0.02 -o acf_plot.dat  
 
 ![Alt text](/windows/wham_run/diffusion/acf_compare.png?raw=true "Autocorrelation plots")
