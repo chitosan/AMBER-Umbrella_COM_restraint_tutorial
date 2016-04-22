@@ -82,7 +82,7 @@ points=np.arange(start,end+space,space)
 for i in xrange(points.shape[0]):
 	for j in xrange(dist.shape[0]):
 		if (points[i]-tolerance)<dist[j]<(points[i]+tolerance):
-			print points[i],dist[j],j+1
+			print points[i],dist[j],j
 			with open('frame_extract.trajin','w') as f:
 				f.write('trajin %s %d %d 1 \n' % (traj,j+1,j+1))
 				f.write('trajout frame_%.1f.rst restart \n' % (points[i]))
