@@ -268,6 +268,6 @@ int main(int argc, char *argv[])
   }
 
   //Print integral value
-  std::cout<<"D(cms/s): "<<((var*var*1.0e-20)/(ans*1.0e-12))*1.e4<<" variance (A^2): "<<(var)<<" integral (A^2 ps): "<<(ans)<<std::endl;
+  std::cout<<"D(cms^2/s): "<<((var*var*1.0e-20)/(ans*1.0e-12))*1.e4<<" variance (A^2): "<<(var)<<" integral (A^2 ps): "<<(ans)<<std::endl;
 
 }
