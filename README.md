@@ -278,7 +278,7 @@ Where:
 * -n is the number of samples over which to calculate the ACF (nCorr)
 * -d is the timestep dt between samples in ps (here 0.02 ps)
 * -o denotes the output file to which to write the ACF
-* -c is an optional flag, which cuts off calculation of the integral after the ACF has dropped to c*variance (e.g. 0.01-0.05)
+* -c cut-off is an optional flag, which cuts off calculation of the integral of the ACF after the ACF has dropped to cut-off*variance (e.g. 0.01-0.05)
 
 If you take a 1 ns sample from the z=32 A window and calculate the ACF and plot the resulting output file, you will see that it quickly decays to zero (within 5 ps), after which it oscillates around zero with a lot of noise. This noise affects the integral - instead, we only integrate up to the point that the ACF has decayed to 0.01 of its initial value using the -c flag:
 >./ACF_calc.x -f ../../md_output/dist_32.0/prod_dist.dat -s 50000 -n 50000 -d 0.02 -c 0.01 -o acf_plot.dat  
