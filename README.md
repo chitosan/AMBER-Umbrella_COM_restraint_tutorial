@@ -285,10 +285,12 @@ If you take a 1 ns sample from the z=32 A window and calculate the ACF and plot 
 
 You should obtain a value for the overall diffusion coefficient of about 3.26e-5 cm^2/s.  
 
-If you now do the same using a sample from z=0 A, you will see that although the ACF decays quickly, it bounces back up with a much more slowly decaying tail. These means that our method of only integrating up until 0.01*variance is no longer acceptable. We instead need to integrate up until about 50 ps, given that the ACF decays roughly to zero by this time (50/0.02=2500, so we use 2500 samples):
->./ACF_calc.x -f ../../md_output/dist_0.0/prod_dist.dat -s 50000 -n 2500 -d 0.02 -o acf_plot.dat  
+If you now do the same using a sample from z=0 A, you will see that although the ACF decays quickly, it bounces back up with a much more slowly decaying tail. 
 
-![Alt text](/windows/wham_run/diffusion/acf_compare.png?raw=true "Autocorrelation plots")
+![Alt text](/windows/wham_run/diffusion/acf_compare.png?raw=true "Autocorrelation plots")  
+
+This means that our method of only integrating up until 0.01*variance is no longer acceptable. We instead need to integrate up until about 50 ps, given that the ACF decays roughly to zero by this time (50/0.02=2500, so we use 2500 samples):
+>./ACF_calc.x -f ../../md_output/dist_0.0/prod_dist.dat -s 50000 -n 2500 -d 0.02 -o acf_plot.dat  
 
 For methanol at least, the transition between using the cut-off method to using 50 ps integration window occurs at z=8 A.
 
