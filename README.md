@@ -297,7 +297,7 @@ For methanol at least, the transition between using the cut-off method to using 
 You can use the following scripts to automate these calculations, please examine each so you know what they are doing and check that file paths are correct:
 
 > First:  
->./get_cut_int_diffusion.sh >> all_diffusion_values.out
+>./get_cut_int_diffusion.sh >> all_diffusion_values.out  
 > Then:  
 >./get_nCorr_diffusion.sh >> all_diffusion_values.out
 
