@@ -307,11 +307,11 @@ You can use the following scripts to automate these calculations, please examine
 
 Now that we have the Z-dependent diffusion values D(Z), we can combine these with the value of the free energy at each Z-position to get the local resistance value R(Z) as:  
 
-![equation](http://ars.els-cdn.com/content/image/1-s2.0-S000634951400664X-si5.gif)
+![equation](/figures/R-z_eqn.gif?raw=true) 
 
 Once we have done that calculation we integrate over each R(z) value to get an effective resistance, the inverse of which is the permeability coefficient:  
 
-![equation](http://ars.els-cdn.com/content/image/1-s2.0-S000634951400664X-si4.gif)  
+![equation](/figures/P-eff_eqn.gif?raw=true) 
 
 (The water layer is taken as z=0 for this integral).  
 
