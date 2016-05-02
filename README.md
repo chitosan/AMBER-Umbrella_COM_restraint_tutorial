@@ -252,11 +252,11 @@ http://pubs.acs.org/doi/full/10.1021/acs.jcim.6b00022
 
 The position-dependent diffusion is calculated as:  
 
-![equation](http://pubs.acs.org/appl/literatum/publisher/achs/journals/content/jcisd8/0/jcisd8.ahead-of-print/acs.jcim.6b00022/20160414/images/ci-2016-00022q_m004.gif)
+![equation](/figures/D-z_eqn.gif?raw=true)  
 
 Where
 
-![equation](http://pubs.acs.org/appl/literatum/publisher/achs/journals/content/jcisd8/0/jcisd8.ahead-of-print/acs.jcim.6b00022/20160414/images/ci-2016-00022q_m005.gif)
+![equation](/figures/C-z_eqn.gif?raw=true)  
 
 For each window, we must calculate the autocorrelation function of the Z-position from the restraint simulation then integrate the result up until it has decayed to zero. The position-dependent diffusion value D(Z) is then the variance var(Z) squared (i.e. the first value in the autocorrelation function squared) divided by the resulting integral. Here, we calculate the ACF and from it a D(Z) estimate using 1 ns periods. Given that we ran each window for 5 ns, we then have five estimates for D(Z) per window and can take an average over these.
 
