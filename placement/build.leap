@@ -1,6 +1,6 @@
-source leaprc.ff12SB
+source leaprc.ff14SB
 source leaprc.gaff
-source leaprc.lipid16
+source leaprc.lipid14
 loadoff ../parameters/MOH.off
 drug = loadpdb moh_center.pdb  
 bilayer = loadpdb DMPC_72_relax.pdb  
