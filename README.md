@@ -66,7 +66,7 @@ Using the output we can build the system with build.leap file shown below:
 
 >source leaprc.ff14SB  
 >source leaprc.gaff  
->source leaprc.lipid16  
+>source leaprc.lipid14  
 >loadoff ../parameters/MOH.off  
 >drug = loadpdb moh_center.pdb  
 >bilayer = loadpdb DMPC_72_relax.pdb  
@@ -395,7 +395,7 @@ A few papers you may want to read on the issues of convergence are linked below:
 
 * Neale *et al*: http://pubs.acs.org/doi/abs/10.1021/ct200316w
 
-**Important:** If you use the AMBER method and lipid force-field to generate PMFs for publication, please cite the relevant AMBER and Lipid14/Lipid16 references:  
+**Important:** If you use the AMBER method and lipid force-field to generate PMFs for publication, please cite the relevant AMBER and Lipid14 (soon to be Lipid16) references:  
 
 * Dickson *et al*: http://pubs.acs.org/doi/abs/10.1021/ct4010307
 
