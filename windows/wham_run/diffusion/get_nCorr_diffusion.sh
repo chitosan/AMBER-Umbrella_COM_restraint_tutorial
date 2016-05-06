@@ -10,9 +10,6 @@ dt_space=0.02
 # Arithmatic using above settings
 ##############################################################################
 
-# Calculate lines
-full_lines=$(echo "scale=2; $total_ns/$dt_space" | bc)
-
 # Calculate lines needed for 1ns 
 lines_1ns=$(echo "scale=0; 1000/${dt_space}" | bc)
 
