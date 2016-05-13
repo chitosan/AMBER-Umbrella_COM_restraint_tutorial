@@ -369,12 +369,12 @@ The resistance profile:
 The values using 5 ns windows are:  
 
 * G(pen): **3.06 kcal/mol** (free energy at the center z=0)  
-* P(eff): **0.263 cm/s**  
+* P(eff): **0.296 cm/s**  
 
 The values I obtain using 30 ns windows are:
 
 * G(pen): **3.27 kcal/mol**  
-* P(eff): **0.277 cm/s**
+* P(eff): **0.297 cm/s**
 
 Your values should be somewhere in this ballpark.
 
