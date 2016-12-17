@@ -165,6 +165,21 @@ This will output frames with the methanol at 0, 2, 4, ..., 32 A from the bilayer
 
 Now we can run each window for 5 ns using the 06_Prod.in input and run_window_cuda.sh bash run script.  
 
+**Note on windows with negative z-value**  
+The COM code is set up to also restrain molecules at a negative position along the z-axis, however there are some subtleties that may catch you out. If your starting z-position is below zero, the molecule will be held at the negative of the r2 value in the .RST file (whether the r2 setting is positive OR negative) - i.e. treat r2 as an absolute value, if the starting z-position is negative, the molecule will be restrained at the negative of this absolute value. Furthermore, the Rcurr value printed in the output file is always an absolute value. You can check the actual separation between the bilayer and drug center-of-mass either in the dist.dat file printed out, or using cpptraj. You may need to do some testing to to run windows with negative z-position.
+
+The upshot of this is that the pulling simulation may go in the negative direction. This is not an issue if you use a symmetric bilayer. You should extract windows as:
+>./extract_window.py -i bilayer_zero.nc -p DMPC_MOH.prmtop -d c0.out -start 0 -end -32 -space -2
+
+For simplicity, flip the -2, -4,.., -32 windows to be positive with cpptraj:
+>cat << EOF >trajin
+>trajin frame_-2.rst 
+>rotate * x 180.0 y 0.0 z 0.0
+>trajout frame_2.rst restart
+>EOF
+
+>cpptraj *prmtop <trajin
+
 **Important:** You should run this using a COM_dist.RST file which is a copy of ref_COM_file.RST (i.e. it contains DISTHERE which gets substituted for the correct distance for each window).
 
 **Sampling:** For the purposes of the tutorial, the windows are separated by 2 A, with each window being run to 5 ns and the z-position being written every 10th step (istep=10). However to obtain a better converged profile, I recommend 1 A spacing, 30 ns run time (at a minimum, ideally 100 ns or more) and istep=1. We will constrast results from 5 ns versus 30 ns run time later.
@@ -382,9 +397,6 @@ These compare favourably with those obtained by Orsi *et al* (also linked at the
 
 * G(pen): **~3.3 kcal/mol**  
 * P(eff): **0.18 ± 0.2 cm/s**
-
-**Note on windows with negative z-value**  
-The COM code is set up to also restrain molecules at a negative position along the z-axis, however there are some subtleties that may catch you out. If your starting z-position is below zero, the molecule will be held at the negative of the r2 value in the .RST file (whether the r2 setting is positive OR negative) - i.e. treat r2 as an absolute value, if the starting z-position is negative, the molecule will be restrained at the negative of this absolute value. Furthermore, the Rcurr value printed in the output file is always an absolute value. You can check the actual separation between the bilayer and drug center-of-mass either in the dist.dat file printed out, or using cpptraj. You may need to do some testing to to run windows with negative z-position.  
 
 **Convergence**  
 Finally, there have been a number of articles addressing the issue of obtaining converged PMF profiles which you should take note of. Try to extend window simulation time and perform as many independent repeats from different initial coordinates and velocities to be sure your profiles are converged. Also, check from the histograms that your windows have suitable overlap.  
