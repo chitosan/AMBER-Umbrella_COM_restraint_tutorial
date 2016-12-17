@@ -171,7 +171,7 @@ The COM code is set up to also restrain molecules at a negative position along t
 The upshot of this is that the pulling simulation may have gone in the negative direction. This is not an issue if you use a symmetric bilayer. You should extract windows as:
 >./extract_window.py -i bilayer_zero.nc -p DMPC_MOH.prmtop -d c0.out -start 0 -end -32 -space -2
 
-For simplicity, flip the -2, -4,.., -32 windows to be positive with cpptraj:
+For simplicity, flip the -2, -4, ..., -32 windows to be positive with cpptraj:
 >cat << EOF >trajin  
 >trajin frame_-2.rst  
 >rotate * x 180.0 y 0.0 z 0.0  
@@ -180,11 +180,11 @@ For simplicity, flip the -2, -4,.., -32 windows to be positive with cpptraj:
 
 >cpptraj *prmtop <trajin  
 
-**Important:** You should run this using a COM_dist.RST file which is a copy of ref_COM_file.RST (i.e. it contains DISTHERE which gets substituted for the correct distance for each window).
-
 **Sampling:** For the purposes of the tutorial, the windows are separated by 2 A, with each window being run to 5 ns and the z-position being written every 10th step (istep=10). However to obtain a better converged profile, I recommend 1 A spacing, 30 ns run time (at a minimum, ideally 100 ns or more) and istep=1. We will constrast results from 5 ns versus 30 ns run time later.
 
 >./run_window_cuda.sh
+
+**Important:** You should run this using a COM_dist.RST file which is a copy of ref_COM_file.RST (i.e. it contains DISTHERE which gets substituted for the correct distance for each window).
 
 If you have multiple GPUs you may want to split these steps into parallel runs, or run each over a CPU cluster. Each window takes roughly 2 hours, there are 17 windows. You can skip running the simulations if you prefer given that all outputs, with the exception of trajectories, are provided.
 
