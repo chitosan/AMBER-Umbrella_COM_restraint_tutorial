@@ -173,7 +173,7 @@ The upshot of this is that the pulling simulation may go in the negative directi
 
 For simplicity, flip the -2, -4,.., -32 windows to be positive with cpptraj:
 >cat << EOF >trajin  
->trajin frame_-2.rst 
+>trajin frame_-2.rst  
 >rotate * x 180.0 y 0.0 z 0.0  
 >trajout frame_2.rst restart  
 >EOF  
