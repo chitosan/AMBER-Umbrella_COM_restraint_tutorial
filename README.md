@@ -172,13 +172,13 @@ The upshot of this is that the pulling simulation may go in the negative directi
 >./extract_window.py -i bilayer_zero.nc -p DMPC_MOH.prmtop -d c0.out -start 0 -end -32 -space -2
 
 For simplicity, flip the -2, -4,.., -32 windows to be positive with cpptraj:
->cat << EOF >trajin
+>cat << EOF >trajin  
 >trajin frame_-2.rst 
->rotate * x 180.0 y 0.0 z 0.0
->trajout frame_2.rst restart
->EOF
+>rotate * x 180.0 y 0.0 z 0.0  
+>trajout frame_2.rst restart  
+>EOF  
 
->cpptraj *prmtop <trajin
+>cpptraj *prmtop <trajin  
 
 **Important:** You should run this using a COM_dist.RST file which is a copy of ref_COM_file.RST (i.e. it contains DISTHERE which gets substituted for the correct distance for each window).
 
