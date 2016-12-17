@@ -340,6 +340,8 @@ A script to perform each step is also enclosed, called parse_fe_diff.py. This re
 
 This will output the free energy curve (free_energy_profile.parse.dat), the diffusion curve (diffusion_profile.parse.dat) and the resistance profile (resistance_profile.parse.dat) plus the overall permeability coefficient.
 
+Note that the free_energy_profile.parse.dat has the same magnitude as that output from WHAM but is debased such that the free energy is zero in the water phase, whereas the WHAM output sets the global minimum to zero. For membrane PMFs, the standard way to report the free energy is with PMF at zero in the water phase (in the case, at z=32A).
+
 Finally, we have only done the calculations for a single monolayer (water phase into the membrane center). If wish to get the values to move all the way through a symmetric membrane we can assume the values will be the same on the opposite side of the bilayer due to symmetry.
 
 >Directory: **./windows/wham_run/overall_perm/full_profile_perm**  
