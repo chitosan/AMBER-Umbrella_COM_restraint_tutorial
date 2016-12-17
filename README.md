@@ -168,7 +168,7 @@ Now we can run each window for 5 ns using the 06_Prod.in input and run_window_cu
 **Note on windows with negative z-value**  
 The COM code is set up to also restrain molecules at a negative position along the z-axis, however there are some subtleties that may catch you out. If your starting z-position is below zero, the molecule will be held at the negative of the r2 value in the .RST file (whether the r2 setting is positive OR negative) - i.e. treat r2 as an absolute value, if the starting z-position is negative, the molecule will be restrained at the negative of this absolute value. Furthermore, the Rcurr value printed in the output file is always an absolute value. You can check the actual separation between the bilayer and drug center-of-mass either in the dist.dat file printed out, or using cpptraj. You may need to do some testing to to run windows with negative z-position.
 
-The upshot of this is that the pulling simulation may go in the negative direction. This is not an issue if you use a symmetric bilayer. You should extract windows as:
+The upshot of this is that the pulling simulation may have gone in the negative direction. This is not an issue if you use a symmetric bilayer. You should extract windows as:
 >./extract_window.py -i bilayer_zero.nc -p DMPC_MOH.prmtop -d c0.out -start 0 -end -32 -space -2
 
 For simplicity, flip the -2, -4,.., -32 windows to be positive with cpptraj:
