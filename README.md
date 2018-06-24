@@ -254,7 +254,7 @@ We see that the overlap is suitable when using 30 ns windows, 1 A separation and
 
 **Important:** The limits 0-> 32 A and bin number 160 are hard-coded into generate_hist.py, you will need to change this for windows at positions along the z-axis outside of these limits in your own simulations.  
 
-#Step 6: Diffusion, resistance and overall permeability
+# Step 6: Diffusion, resistance and overall permeability
 The final step computes first the diffusion along the z-axis, combines the result with the free energy profile data to obtain the resistance along the z-axis and finally integrates the resistance at each z-window to obtain an overall permeability coefficient estimate.
 
 >Directory: **./windows/wham_run/diffusion**  
