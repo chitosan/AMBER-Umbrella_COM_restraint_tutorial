@@ -1,4 +1,5 @@
 source leaprc.protein.ff14SB
+source leaprc.water.tip3p
 source leaprc.gaff
 source leaprc.lipid14
 loadoff ../parameters/MOH.off
