@@ -65,6 +65,7 @@ We can now create AMBER prmtop and inpcrd files of the system. First, to set the
 Using the output we can build the system with build.leap file shown below:
 
 >source leaprc.protein.ff14SB  
+>source leaprc.water.tip3p  
 >source leaprc.gaff  
 >source leaprc.lipid14  
 >loadoff ../parameters/MOH.off  
