@@ -31,7 +31,7 @@ elif len(sys.argv)>=2:
 		if os.path.isfile(args.i):
 			input_sys=args.i
 		elif (not os.path.isfile(args.i)):
-			print 'Cannot find file: ',args.i
+			print('Cannot find file: ' % (args.i))
 			sys.exit(1)
 	else:
 		parser.print_help()
@@ -40,7 +40,7 @@ elif len(sys.argv)>=2:
 	if args.o != None:
 		output=args.o
 	else:
-		print 'Output file name not specified, setting to COM_dist.RST.'
+		print('Output file name not specified, setting to COM_dist.RST.')
 		output='COM_dist.RST'
 
 ################################################################################
@@ -74,7 +74,7 @@ for line in lines:
 f.close()
 
 # Write out .RST file
-print 'Writing file: ',output
+print('Writing file: %s' % (output))
 
 f_out=open(output,'w')
 
