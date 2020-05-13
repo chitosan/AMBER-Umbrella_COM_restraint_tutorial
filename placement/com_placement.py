@@ -66,13 +66,13 @@ elif len(sys.argv)>4:
 			input_file_name=args.i
 			drug_file=args.d
 		elif not os.path.isfile(args.d):
-			print 'Cannot find file: ',args.d
+			print('Cannot find file: %s' % (args.d))
 			sys.exit(1)
 		elif not os.path.isfile(args.i):
-			print 'Cannot find file: ',args.i
+			print('Cannot find file: %s' % (args.i))
 			sys.exit(1)
 		elif (not os.path.isfile(args.i) and not os.path.isfile(args.d)):
-			print 'Cannot find inputs'
+			print('Cannot find inputs')
 			sys.exit(1)
 	else:
 		parser.print_help()
@@ -85,7 +85,7 @@ elif len(sys.argv)>4:
 		position=0.0
 
 if input_file_name==None or drug_file==None or position==None:
-	print 'Error: input options not set'
+	print('Error: input options not set')
 	sys.exit(1)
 
 ################################################################################
@@ -102,7 +102,7 @@ with open(input_file_name, 'r') as f:
 
 # Check that bilayer PDB does contain N31 atom types as set above
 if length==0:
-	print 'Error: Cannot set bilayer center-of-mass'
+	print('Error: Cannot set bilayer center-of-mass')
 	sys.exit(1)
 
 # Now set bilayer center-of-mass
@@ -178,10 +178,10 @@ with open(drug_file,'r') as f:
 	for line in f:
 	# Move
 		if line[0:3] == "TER":
-			print "TER" 
+			print("TER")
 		elif line[0:3] == "END":
-                	print "END"
+                	print("END")
 		else:
-			print "%s   %7.3f %7.3f %7.3f" % (line[0:28],float(line[30:38])+move.x,float(line[38:46])+move.y,float(line[46:54])+move.z)
+			print("%s   %7.3f %7.3f %7.3f" % (line[0:28],float(line[30:38])+move.x,float(line[38:46])+move.y,float(line[46:54])+move.z))
 
-	print "TER"
+	print("TER")
