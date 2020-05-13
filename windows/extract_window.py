@@ -41,13 +41,13 @@ elif len(sys.argv)>10:
 			start=args.start
 			end=args.end
 		elif not os.path.isfile(args.d):
-			print 'Cannot find: ',args.d
+			print('Cannot find: %s' % (args.d))
 			sys.exit(1)
 		elif not os.path.isfile(args.p):
-			print 'Cannot find: ',args.p
+			print('Cannot find: %s' (args.p))
 			sys.exit(1)
 		elif not os.path.isfile(args.i):
-			print 'Cannot find: ',args.i
+			print 'Cannot find: %s' (args.i))
 			sys.exit(1)
 	else:
 		parser.print_help()
@@ -56,13 +56,13 @@ elif len(sys.argv)>10:
 	if args.space != None:
 		space=args.space
 	else:
-		print 'Spacing not set: using 1 A'
+		print('Spacing not set: using 1 A')
 		space=1.0
 
 # Check that AMBERHOME is set
 amberhome = os.getenv('AMBERHOME')
 if amberhome == None:
-        print 'Error: AMBERHOME not set'
+        print('Error: AMBERHOME not set')
 	sys.exit(1)
 
 # Check that for negative end-point, spacing will descend
@@ -82,7 +82,7 @@ points=np.arange(start,end+space,space)
 for i in xrange(points.shape[0]):
 	for j in xrange(dist.shape[0]):
 		if (points[i]-tolerance)<dist[j]<(points[i]+tolerance):
-			print points[i],dist[j],j
+			print(points[i],dist[j],j)
 			with open('frame_extract.trajin','w') as f:
 				f.write('trajin %s %d %d 1 \n' % (traj,j+1,j+1))
 				f.write('trajout frame_%.1f.rst restart \n' % (points[i]))
@@ -91,4 +91,4 @@ for i in xrange(points.shape[0]):
 			os.system('rm out')
 			break
 	else:
-		print 'Empty window: ',points[i]
+		print('Empty window: %lf' % (points[i]))
