@@ -11,24 +11,24 @@ input_file_name=''
 try:
         myopts, args = getopt.getopt(sys.argv[1:],"i:")
 except getopt.GetoptError, err:
-        print "Error: ", str(err)
-        print "Usage: ./generate_hist.py -i dist.dat"
+        print("Error: ", str(err))
+        print("Usage: ./generate_hist.py -i dist.dat")
         sys.exit(2)
 
 for o, a in myopts:
         if o == "-i":
                 input_file_name = a
         else:
-                print 'Error'
-                print "Usage: ./generate_hist.py -i dist.dat"
+                print('Error')
+                print("Usage: ./generate_hist.py -i dist.dat")
                 sys.exit(0)
 
 #### Check options are set ####
 if input_file_name == '':
-        print 'Error: cannot find dist.dat'
+        print('Error: cannot find dist.dat')
         sys.exit(2)
 elif os.path.isfile(input_file_name) == False:
-	print 'Error: cannot find',input_file_name
+	print('Error: cannot find',input_file_name)
 	sys.exit(2)
 
 
@@ -51,5 +51,5 @@ hist,bin=numpy.histogram(dist,bins=160,range=(-2.0,34.0))
 
 # Print out
 for b, h in zip(bin[1:],hist):
-	print b, h
+	print(b, h)
 
