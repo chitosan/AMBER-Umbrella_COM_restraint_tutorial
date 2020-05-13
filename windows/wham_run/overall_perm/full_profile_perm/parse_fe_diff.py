@@ -50,10 +50,10 @@ elif len(sys.argv)>12:
 			end=args.end
 			temperature=args.temp
 		elif not os.path.isfile(args.fe):
-			print 'Cannot find: ',args.fe
+			print('Cannot find: %s' % (args.fe))
 			sys.exit(1)
 		elif not os.path.isfile(args.diff):
-			print 'Cannot find: ',args.diff
+			print('Cannot find: %s' % (args.diff))
 			sys.exit(1)
 	else:
 		parser.print_help()
@@ -62,15 +62,15 @@ elif len(sys.argv)>12:
 	if args.space != None and args.space!=0:
 		space=args.space
 	elif args.space==0:
-		print 'Error: cannot use zero spacing'
+		print('Error: cannot use zero spacing')
 		sys.exit(1)
 	else:
-		print 'Spacing not set: using 1 A'
+		print('Spacing not set: using 1 A')
 		space=1.0
 
 # Check arguments are set
 if fe_input==None or diff_input==None or start==None or end==None or space==None or temperature==None:
-	print 'Error: options not set'
+	print('Error: options not set')
 	sys.exit(1)
 
 # Check that for negative end-point, spacing will descend
@@ -86,13 +86,13 @@ RT=0.0019858775*temperature
 #with open(fe_input) as f_in:
 #        line = f_in.readline()
 #if len(line.split())>2:
-#        print 'Error: input file contains >2 columns'
+#        print('Error: input file contains >2 columns')
 #        sys.exit(1)
 
 with open(diff_input) as f_in:
 	line = f_in.readline()
 if len(line.split())>2:
-	print 'Error: input file contains >2 columns'
+	print('Error: input file contains >2 columns')
 	sys.exit(1)
 
 # Load free energy and diffusion profile files
@@ -111,7 +111,7 @@ out_perm=np.zeros((points.shape[0],4))
 for i in xrange(points.shape[0]):
 	for j in xrange(fe_data.shape[0]):
 		if (points[i]-tolerance)<fe_data[j][0]<(points[i]+tolerance):
-			#print fe_data[j][0],fe_data[j][1]
+			#print(fe_data[j][0],fe_data[j][1])
 			out_perm[i][0]=points[i]
 			out_perm[i][1]=fe_data[j][1]
 			break
@@ -132,7 +132,7 @@ for i in xrange(points.shape[0]):
 	if out_perm[i][2]!=0.0:
 		out_perm[i][3]=(math.exp(out_perm[i][1]/RT))/out_perm[i][2]
 	else:
-		print 'Error: out-of-bounds',points[i]
+		print('Error: out-of-bounds',points[i])
 
 # Write out resistance
 with open('resistance_profile.parse.dat','w') as f:
@@ -152,7 +152,7 @@ with open('diffusion_profile.parse.dat','w') as f:
 # Print out permeability coefficient
 try:
 	Reff=np.trapz(out_perm[:,3],dx=(space*1e-8))
-	print 'Reff: ',Reff,' Peff: ',(1/Reff),' cm/s'
+	print('Reff: ',Reff,' Peff: ',(1/Reff),' cm/s')
 except:
-	print 'Error: could not integrate resistance'
+	print('Error: could not integrate resistance')
 
