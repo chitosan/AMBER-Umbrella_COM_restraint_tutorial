@@ -177,11 +177,14 @@ move=Coord((bilayer_com.x-drug_com.x), (bilayer_com.y-drug_com.y), (bilayer_com.
 with open(drug_file,'r') as f:
 	for line in f:
 	# Move
+		if line[0:6] == "REMARK" or line[0:6] == "HEADER" or line[0:6] == "CONECT":
+			print(line)
 		if line[0:3] == "TER":
 			print("TER")
 		elif line[0:3] == "END":
                 	print("END")
 		else:
+			if line[0:6] == "HETATM" or line[0:4] == "ATOM":
 			print("%s   %7.3f %7.3f %7.3f" % (line[0:28],float(line[30:38])+move.x,float(line[38:46])+move.y,float(line[46:54])+move.z))
 
 	print("TER")
